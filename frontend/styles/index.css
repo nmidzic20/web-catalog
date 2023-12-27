@@ -1,0 +1,39 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    scroll-behavior: smooth;
+}
+        
+header {
+    background-color: #1d2d25;
+    padding: 20px;
+    text-align: center;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+        
+footer {
+    background-color: #1d2d25;
+    padding: 10px;
+    text-align: center;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#catalog {
+    max-width: 80vw;
+    margin: 0 auto;
+}
