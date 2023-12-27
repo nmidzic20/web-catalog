@@ -1,4 +1,4 @@
-.food-details {
+.grocery-details {
     width: 200px;
     height: 300px;
     background-color: #1d2d25;
@@ -9,7 +9,7 @@
     cursor: pointer;
 }
 
-.food-details img {
+.grocery-details img {
     width: 100%;
     height: auto;
     max-height: 70%;
@@ -17,7 +17,7 @@
     padding-bottom: 10px;
 }
 
-.food-details p {
+.grocery-details p {
     margin-top: 10px;
     font-size: 16px;
 }

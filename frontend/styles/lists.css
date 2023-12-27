@@ -1,6 +1,23 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
-    grid-gap: 20px;
+#catalog {
+    padding-top: 2rem;
+    max-width: 82.5vw;
+    margin: 0 auto;
+}
+
+.grocery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 1fr;
+}
+
+.recipe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 1fr;
+}
+
+.list-additional-message {
+    margin: 20px 0;
     padding: 20px;
+    color: limegreen;
 }

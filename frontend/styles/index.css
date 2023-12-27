@@ -23,6 +23,7 @@ body {
 }
         
 footer {
+    margin-top: 2rem;
     background-color: #1d2d25;
     padding: 10px;
     text-align: center;
@@ -33,7 +34,6 @@ a {
     text-decoration: none;
 }
 
-#catalog {
-    max-width: 80vw;
-    margin: 0 auto;
+.hidden {
+    display: none;
 }

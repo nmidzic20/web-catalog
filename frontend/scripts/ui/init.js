@@ -1,0 +1,4 @@
+window.onload = () => {
+    insertTempGroceryGrid();
+    insertTempRecipeGrid();
+};

@@ -3,27 +3,38 @@
     <head>
         <link rel="stylesheet" href="styles/index.css">
         <link rel="stylesheet" href="styles/lists.css">
-        <link rel="stylesheet" href="styles/food-list.css">
+        <link rel="stylesheet" href="styles/grocery-list.css">
+        <link rel="stylesheet" href="styles/recipe-list.css">
         <link rel="stylesheet" href="styles/nav.css">
-        <title>Web Catalog</title>
-        <script src="./scripts/food.js"></script>
+        <script src="./scripts/models/grocery.js"></script>
+        <script src="./scripts/models/recipe.js"></script>
+        <script src="./scripts/helpers/helper-functions.js"></script>
         <script src="./scripts/mock-db.js"></script>
-        <script src="./scripts/load-food-catalog.js"></script>
+        <script src="./scripts/ui/init/load-grocery-catalog.js"></script>
+        <script src="./scripts/ui/init/load-recipe-catalog.js"></script>
+        <script src="./scripts/ui/init.js"></script>
+        <title>Grocery Catalog</title>
     </head>
-    <header>
-        <h1>Grocery Catalog</h1>
-    </header>
+    <header><h1>Grocery Catalog</h1></header>
     <nav>
-        <a href="#recipes" class="nav-link">Recipes</a>
-        <a href="#foods" class="nav-link">Foods</a>
+        <a href="#recipe-section" class="nav-link">Recipes</a>
+        <a href="#grocery-section" class="nav-link">Groceries</a>
     </nav>
     <body>
         <div id="catalog">
-            <div class="grid" id="foods"></div>
-            <div class="grid" id="recipes"></div>
+            <div id="grocery-section">
+                <h2>Groceries</h2>
+                <p id="no-groceries" class="list-additional-message">No groceries are available.</p>
+                <div class="grocery-grid" id="groceries"></div>
+            </div>
+            <div id="recipe-section">
+                <h2>Recipes</h2>
+                <p id="no-recipes" class="list-additional-message">No recipes are available.</p>
+                <div class="recipe-grid" id="recipes"></div>
+            </div>
         </div>
     </body>
     <footer>
-        <p>&copy; Web Catalog 2023, all rights reserved.</p>
+        <p>&copy; Grocery Catalog 2023, all rights reserved.</p>
     </footer>
 </html>
