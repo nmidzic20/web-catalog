@@ -43,7 +43,6 @@ fieldset {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-right: 2rem !important;
 }
 
 fieldset input, fieldset textarea, fieldset select {
@@ -67,9 +66,20 @@ form input, textarea, select {
     margin-right: 0;
     width: 100px;
     padding: 0.5rem 1rem;
+    margin: 0;
     border-radius: 8px;
     background-color: #1d2d25;
     color: #ffffff;
+}
+
+#grocery-amounts {
+    border: 1px solid white;
+    background-color: #0c4d17;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .section-heading input:active {
@@ -83,4 +93,8 @@ form input, textarea, select {
     background-color: #1a1a1a;
     color: #ffffff;
     cursor: pointer;
+}
+
+label input {
+    margin-right: 0.5rem;
 }

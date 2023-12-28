@@ -25,48 +25,22 @@
     </nav>
     <body>
         <div id="catalog">
-            <div id="grocery-section">
-                <div class="section-heading">
+            <div id="grocery-section" class="section-heading">
+                <div id="groceries-heading" style="display: flex; flex-direction: row;">
                     <h2>Groceries</h2>
-                    <form>
-                        <fieldset>
-                            <label for="grocery-name">Grocery Name:</label>
-                            <input type="text" id="grocery-name" name="grocery-name" required>
-                            <label for="carbs">Carbs:</label>
-                            <input type="number" id="carbs" name="carbs" required>
-                            <label for="image-address">Image Address:</label>
-                            <input type="text" id="image-address" name="image-address">
-                            <input type="button" value="Add new grocery" id="add-grocery">
-                        </fieldset>
-                    </form>
+                    <div class="section-heading" style="margin-left: auto; margin-right: 2rem;">
+                        <form><input type="button" id="grocery-form-display" value="Grocery form"></form>
+                    </div>
                 </div>
                 <p id="no-groceries" class="list-additional-message">No groceries are available.</p>
                 <div class="grocery-grid" id="groceries"></div>
             </div>
-            <div id="recipe-section">
-                <div class="section-heading">
+            <div id="recipe-section" class="section-heading">
+                <div id="recipes-heading" style="display: flex; flex-direction: row;">
                     <h2>Recipes</h2>
-                    <form id="recipe-form">
-                        <label for="groceries-form-list">Groceries:</label>
-                        <fieldset>
-                            <select id="groceries-form-list" name="groceries-form-list" multiple style="min-width: 200px; height: 200px; overflow: auto;"></select>
-                            <fieldset id="grocery-amounts" class="hidden" style="border: 1px solid white; background-color: #0c4d17; flex-wrap: wrap; border-radius: 8px;"></fieldset>
-                        </fieldset>
-                        <!-- <input type="button" id="grocery-amounts-button" value="Grocery amounts"> -->
-                        <fieldset>
-                            <label for="recipe-name">Recipe Name:</label>
-                            <input type="text" id="recipe-name" name="recipe-name" required>
-                            <label for="image-address">Image Address:</label>
-                            <input type="text" id="image-address" name="image-address">
-                        </fieldset>
-                        <fieldset>
-                            <label for="description">Description:</label>
-                            <textarea id="description" name="description" required></textarea>
-                            <label for="tutorial">Tutorial:</label>
-                            <textarea id="tutorial" name="tutorial" required></textarea>
-                        </fieldset>
-                        <input type="button" value="Add new recipe" id="add-recipe">
-                    </form>
+                    <div class="section-heading" style="margin-left: auto; margin-right: 2rem;">
+                        <form><input type="button" id="recipe-form-display" value="Recipe form"></form>
+                    </div>
                 </div>
                 <p id="no-recipes" class="list-additional-message">No recipes are available.</p>
                 <div class="recipe-grid" id="recipes"></div>

@@ -1,8 +1,12 @@
 window.onload = () => {
+    // groceries - insert content, load form, init form, init button
     insertTempGroceryGrid();
-    insertTempRecipeGrid();
-    initAddRecipeButton();
-    initAddRecipeForm();
+    loadAddGroceryForm();
+    // initAddGroceryForm(); // not necessary for now, might add or remove permanently later
     initAddGroceryButton();
-    initAddGroceryForm();
+    // recipes - insert content, load form, init form, init button
+    insertTempRecipeGrid();
+    loadAddRecipeForm();
+    initAddRecipeForm();
+    initAddRecipeButton();
 };

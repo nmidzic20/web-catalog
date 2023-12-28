@@ -1,4 +1,48 @@
+function loadAddRecipeForm() {
+    const recipesHeading = document.getElementById("recipes-heading");
+    recipesHeading.outerHTML += `
+        <form id="recipe-form" class="hidden">
+            <label for="groceries-form-list">Groceries:</label>
+            <fieldset>
+                <fieldset>
+                    <select id="groceries-form-list" name="groceries-form-list" multiple style="min-width: 200px; height: 200px; overflow: auto;"></select>
+                    <fieldset id="grocery-amounts" class="hidden"></fieldset>
+                </fieldset>
+                <!-- <input type="button" id="grocery-amounts-button" value="Grocery amounts"> -->
+                <fieldset style="flex-direction: column; width: 350px;">
+                    <fieldset>
+                        <label for="recipe-name">Recipe Name:</label>
+                        <input type="text" id="recipe-name" name="recipe-name" required>
+                        <label for="image-address">Image Address:</label>
+                        <input type="text" id="image-address" name="image-address">
+                    </fieldset>
+                    <fieldset>
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" required></textarea>
+                        <label for="tutorial">Tutorial:</label>
+                        <textarea id="tutorial" name="tutorial" required></textarea>
+                    </fieldset>
+                    <input type="button" value="Add new recipe" id="add-recipe" style="margin-top: 0; margin-left: auto; margin-right: 1rem !important;">
+                </fieldset>
+            </fieldset>
+        </form>`;
+}
+
+function initGroceryListForRecipeForm() {
+    function initAddGroceryForm() {
+        const groceryItems = db.groceryItems;
+        const options = groceryItems.map(item => {
+            const { id, name, carbs } = item;
+            return `<option value="${id}">${name} (carbs: ${carbs}g)</option>`;
+        });
+        const selectInput = document.getElementById("groceries-form-list");
+        selectInput.innerHTML = options.join("");
+    }
+    initAddGroceryForm();
+}
+
 function initAddRecipeForm() {
+    initGroceryListForRecipeForm();
     const selectInput = document.getElementById("groceries-form-list");
     const groceryAmounts = document.getElementById("grocery-amounts");
     // const groceryAmountsButton = document.getElementById("grocery-amounts-button");
