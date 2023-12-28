@@ -1,5 +1,4 @@
 function insertTempGroceryGrid() {
-    var db = new DB();
     var grid = document.getElementById('groceries');
     if (db.groceryItems.length == 0) {
         changeVisibility('no-groceries');

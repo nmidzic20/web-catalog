@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+div #catalog {
+    margin-left: 2.5rem;
+}
+
 .grocery-grid {
     display: flex;
     flex-wrap: wrap;

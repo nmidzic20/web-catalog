@@ -1,5 +1,5 @@
 /* #1a1a1a for the background, #1d2d25 for the highlight color */
-/* primary color is #ffffff */
+/* primary color is #ffffff, secondary is limegreen */
 
 nav {
     display: flex;
@@ -8,7 +8,7 @@ nav {
     align-items: flex-start;
     position: fixed;
     top: 50%;
-    left: -50px;
+    left: -80px;
     transform: rotate(-90deg);
 }
 

@@ -1,5 +1,4 @@
 function insertTempRecipeGrid() {
-    var db = new DB();
     var recipeList = db.recipeItems;
     var grid = document.getElementById('recipes');
     if (recipeList.length == 0) {

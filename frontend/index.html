@@ -10,9 +10,12 @@
         <script src="./scripts/models/recipe.js"></script>
         <script src="./scripts/helpers/helper-functions.js"></script>
         <script src="./scripts/mock-db.js"></script>
-        <script src="./scripts/ui/init/load-grocery-catalog.js"></script>
-        <script src="./scripts/ui/init/load-recipe-catalog.js"></script>
         <script src="./scripts/ui/init.js"></script>
+        <script src="./scripts/ui/init/init-add-buttons.js"></script>
+        <script src="./scripts/ui/init/grocery/load-grocery-catalog.js"></script>
+        <script src="./scripts/ui/init/grocery/load-grocery-form.js"></script>
+        <script src="./scripts/ui/init/recipe/load-recipe-catalog.js"></script>
+        <script src="./scripts/ui/init/recipe/load-recipe-form.js"></script>
         <title>Grocery Catalog</title>
     </head>
     <header><h1>Grocery Catalog</h1></header>
@@ -23,12 +26,48 @@
     <body>
         <div id="catalog">
             <div id="grocery-section">
-                <h2>Groceries</h2>
+                <div class="section-heading">
+                    <h2>Groceries</h2>
+                    <form>
+                        <fieldset>
+                            <label for="grocery-name">Grocery Name:</label>
+                            <input type="text" id="grocery-name" name="grocery-name" required>
+                            <label for="carbs">Carbs:</label>
+                            <input type="number" id="carbs" name="carbs" required>
+                            <label for="image-address">Image Address:</label>
+                            <input type="text" id="image-address" name="image-address">
+                            <input type="button" value="Add new grocery" id="add-grocery">
+                        </fieldset>
+                    </form>
+                </div>
                 <p id="no-groceries" class="list-additional-message">No groceries are available.</p>
                 <div class="grocery-grid" id="groceries"></div>
             </div>
             <div id="recipe-section">
-                <h2>Recipes</h2>
+                <div class="section-heading">
+                    <h2>Recipes</h2>
+                    <form id="recipe-form">
+                        <label for="groceries-form-list">Groceries:</label>
+                        <fieldset>
+                            <select id="groceries-form-list" name="groceries-form-list" multiple style="min-width: 200px; height: 200px; overflow: auto;"></select>
+                            <fieldset id="grocery-amounts" class="hidden" style="border: 1px solid white; background-color: #0c4d17; flex-wrap: wrap; border-radius: 8px;"></fieldset>
+                        </fieldset>
+                        <!-- <input type="button" id="grocery-amounts-button" value="Grocery amounts"> -->
+                        <fieldset>
+                            <label for="recipe-name">Recipe Name:</label>
+                            <input type="text" id="recipe-name" name="recipe-name" required>
+                            <label for="image-address">Image Address:</label>
+                            <input type="text" id="image-address" name="image-address">
+                        </fieldset>
+                        <fieldset>
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" required></textarea>
+                            <label for="tutorial">Tutorial:</label>
+                            <textarea id="tutorial" name="tutorial" required></textarea>
+                        </fieldset>
+                        <input type="button" value="Add new recipe" id="add-recipe">
+                    </form>
+                </div>
                 <p id="no-recipes" class="list-additional-message">No recipes are available.</p>
                 <div class="recipe-grid" id="recipes"></div>
             </div>

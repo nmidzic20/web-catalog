@@ -21,4 +21,11 @@ class DB {
             new Recipe(4, 'Pineapple Pizza', '', this.groceryItems.slice(0, 2), 'This is a description', 'This is a set of instructions'),
         ];
     }
+    addGrocery(grocery) {
+        this.groceryItems.push(grocery);
+    }
+    addRecipe(recipe) {
+        this.recipeItems.push(recipe);
+    }
 }
+var db = new DB();

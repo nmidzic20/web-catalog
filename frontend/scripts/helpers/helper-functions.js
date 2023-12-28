@@ -6,3 +6,12 @@ function changeVisibility(id) {
         element.classList.add('hidden');
     }
 }
+
+function setVisibility(id, visible) {
+    var element = document.getElementById(id);
+    if (visible) {
+        element.classList.remove('hidden');
+    } else {
+        element.classList.add('hidden');
+    }
+}

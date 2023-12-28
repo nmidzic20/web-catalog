@@ -37,3 +37,50 @@ a {
 .hidden {
     display: none;
 }
+
+fieldset {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 2rem !important;
+}
+
+fieldset input, fieldset textarea, fieldset select {
+    margin-right: 0.5rem !important;
+}
+
+form input, textarea, select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    width: 10rem;
+    border-radius: 8px;
+    background-color: #1d2d25;
+    color: #ffffff;
+}
+
+#grocery-amounts input {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100px;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background-color: #1d2d25;
+    color: #ffffff;
+}
+
+.section-heading input:active {
+    outline: none;
+    background-color: #1d2d25 !important;
+    color: limegreen !important;
+    cursor: pointer;
+}
+
+.section-heading input:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    cursor: pointer;
+}
