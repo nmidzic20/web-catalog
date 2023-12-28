@@ -23,9 +23,11 @@ class DB {
     }
     addGrocery(grocery) {
         this.groceryItems.push(grocery);
+        insertTempGroceryGrid();
     }
     addRecipe(recipe) {
         this.recipeItems.push(recipe);
+        insertTempRecipeGrid();
     }
 }
 var db = new DB();

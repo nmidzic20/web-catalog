@@ -5,10 +5,10 @@ function loadAddGroceryForm() {
             <fieldset>
                 <label for="grocery-name">Grocery Name:</label>
                 <input type="text" id="grocery-name" name="grocery-name" required>
-                <label for="carbs">Carbs:</label>
-                <input type="number" id="carbs" name="carbs" required>
-                <label for="image-address">Image Address:</label>
-                <input type="text" id="image-address" name="image-address">
+                <label for="grocery-carbs">Carbs:</label>
+                <input type="number" id="grocery-carbs" name="grocery-carbs" required>
+                <label for="grocery-image">Image Address:</label>
+                <input type="text" id="grocery-image" name="grocery-image">
                 <input type="button" value="Add new grocery" id="add-grocery">
             </fieldset>
         </form>`;

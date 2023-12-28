@@ -2,17 +2,13 @@ function initAddGroceryButton() {
     initShowGroceryFormButton();
     const addGroceryButton = document.getElementById('add-grocery');
     addGroceryButton.addEventListener('click', () => {
-        const groceryName = document.querySelector('.grocery-name').value;
-        const groceryQuantity = document.querySelector('.grocery-quantity').value;
-        const groceryUnit = document.querySelector('.grocery-unit').value;
-        const groceryCategory = document.querySelector('.grocery-category').value;
-        const grocery = {
-            name: groceryName,
-            quantity: groceryQuantity,
-            unit: groceryUnit,
-            category: groceryCategory
-        }
-        addGrocery(grocery);
+        var grocery = new Grocery(
+            -1,
+            document.getElementById('grocery-name').value,
+            document.getElementById('grocery-carbs').value,
+            document.getElementById('grocery-image').value
+        );
+        db.addGrocery(grocery);
     });
 }
 
@@ -27,15 +23,25 @@ function initAddRecipeButton() {
     initShowRecipeFormButton();
     const addRecipeButton = document.getElementById('add-recipe');
     addRecipeButton.addEventListener('click', () => {
-        const recipeName = document.querySelector('.recipe-name').value;
-        const recipeIngredients = document.querySelector('.recipe-ingredients').value;
-        const recipeInstructions = document.querySelector('.recipe-instructions').value;
-        const recipe = {
-            name: recipeName,
-            ingredients: recipeIngredients,
-            instructions: recipeInstructions
-        }
-        addRecipe(recipe);
+        var groceryItems = [];
+        var selectedItems = document.querySelectorAll('#recipe-groceries-list option:checked');
+        
+        selectedItems.forEach(item => {
+            var id = parseInt(item.value.split('-')[0]);
+            if (db.groceryItems.includes(id)) {
+                groceryItems.push(id);
+            }
+        });
+        
+        var recipe = new Recipe(
+            -1,
+            document.getElementById('recipe-name').value,
+            document.getElementById('recipe-image').value,
+            groceryItems,
+            document.getElementById('recipe-description').value,
+            document.getElementById('recipe-instructions').value,
+        );
+        db.addRecipe(recipe);
     });
 }
 

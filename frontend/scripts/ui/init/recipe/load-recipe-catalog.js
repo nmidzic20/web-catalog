@@ -1,14 +1,12 @@
 function insertTempRecipeGrid() {
-    var recipeList = db.recipeItems;
     var grid = document.getElementById('recipes');
-    if (recipeList.length == 0) {
-        changeVisibility('no-recipes');
+    if (db.recipeItems.length === 0) {
+        setVisibility('no-recipes', true);
         return;
     } else {
-        changeVisibility('no-recipes');
-        grid.innerHTML = recipeList.map(function(recipe) {
+        setVisibility('no-recipes', false);
+        grid.innerHTML = db.recipeItems.map(function(recipe) {
             return recipe.getClickableHtmlDisplay()
         }).join('');
     }
-
 }
