@@ -14,11 +14,14 @@ def request_handler(request):
     if requested_path == "/favicon.ico":
         return ""
 
-    file = open(FRONTEND_DIR + requested_path)
-    file_content = file.read()
-    file.close()
+    try:
+        file = open(FRONTEND_DIR + requested_path)
+        file_content = file.read()
+        file.close()
 
-    response = "HTTP/1.1 200 OK\n\n" + file_content
+        response = "HTTP/1.1 200 OK\n\n" + file_content
+    except FileNotFoundError:
+        response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
 
     return response
 
