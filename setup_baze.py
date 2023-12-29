@@ -37,7 +37,9 @@ def insert_dummy_data(conn):
     
 
 if __name__ == '__main__':
-
+    
+    sql_drop_groceries_table = "DROP TABLE IF EXISTS Grocery;"
+    
     sql_create_groceries_table = '''CREATE TABLE IF NOT EXISTS Grocery (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -46,12 +48,16 @@ if __name__ == '__main__':
         );
     '''
 
+    sql_drop_recipes_table = "DROP TABLE IF EXISTS Recipe;"
+
     sql_create_recipes_table = '''CREATE TABLE IF NOT EXISTS Recipe (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             description TEXT
         );
     '''
+
+    sql_drop_ingredients_table = "DROP TABLE IF EXISTS Ingredient;"
 
     sql_create_ingredients_table = '''CREATE TABLE IF NOT EXISTS Ingredient (
             recipe_id INTEGER ,
@@ -65,8 +71,11 @@ if __name__ == '__main__':
 
     conn = create_connection("web-catalog.sqlite")
     if conn is not None:
+        execute_commands(conn, sql_drop_groceries_table)
         execute_commands(conn, sql_create_groceries_table)
+        execute_commands(conn, sql_drop_recipes_table)
         execute_commands(conn, sql_create_recipes_table)
+        execute_commands(conn, sql_drop_ingredients_table)
         execute_commands(conn, sql_create_ingredients_table)
         insert_dummy_data(conn)
 
