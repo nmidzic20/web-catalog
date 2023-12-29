@@ -8,22 +8,37 @@ def request_handler(request):
     headers = request.split("\n")
     request_type, requested_path, http = headers[0].split()
 
-    if requested_path == "/":
-        requested_path = "/index.html"
+    if request_type == "POST":
+        content_length = 0
+        for header in headers:
+            if "Content-Length" in header:
+                content_length = int(header.split(":")[1])
+                break
 
-    if requested_path == "/favicon.ico":
-        return ""
+        if content_length > 0:
+            body = headers[-1]
+            data = body[:content_length]
 
-    try:
-        file = open(FRONTEND_DIR + requested_path)
-        file_content = file.read()
-        file.close()
+            # pozvati funkciju za obradu iz odgovarajuce skripte
 
-        response = "HTTP/1.1 200 OK\n\n" + file_content
-    except FileNotFoundError:
-        response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
+            return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
+    elif request_type == "GET":
+        if requested_path == "/":
+            requested_path = "/index.html"
 
-    return response
+        if requested_path == "/favicon.ico":
+            return ""
+
+        try:
+            file = open(FRONTEND_DIR + requested_path)
+            file_content = file.read()
+            file.close()
+
+            response = "HTTP/1.1 200 OK\n\n" + file_content
+        except FileNotFoundError:
+            response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
+
+        return response
 
 def main():
     SERVER_HOST = "127.0.0.1"
