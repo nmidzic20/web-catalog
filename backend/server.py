@@ -1,5 +1,6 @@
 import socket
 import time
+import json
 
 FRONTEND_DIR = "../frontend"
 
@@ -17,9 +18,16 @@ def request_handler(request):
 
         if content_length > 0:
             body = headers[-1]
-            data = body[:content_length]
+            dataJson = body[:content_length]
+
+            print("POST request received")
+            data = json.loads(dataJson)
 
             # pozvati funkciju za obradu iz odgovarajuce skripte
+            if requested_path == "/recipes":
+                print(data['recipe'])
+            elif requested_path == "/groceries":
+                print(data['grocery'])
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
