@@ -1,9 +1,14 @@
 import sqlite3
 
 class DB:
-    def __init__(self, db_path):
-        self.db_path = db_path
-        self.conn = None
+    _instance = None
+
+    def __new__(cls, db_path):
+        if not cls._instance:
+            cls._instance = super(DB, cls).__new__(cls)
+            cls._instance.db_path = db_path
+            cls._instance.conn = None
+        return cls._instance
 
     def connect_to_database(self):
         try:
@@ -48,8 +53,14 @@ class DB:
             self.conn.close()
             print('Connection closed.')
 
+    @classmethod
+    def get_instance(cls, db_path):
+        if not cls._instance:
+            cls._instance = cls(db_path)
+        return cls._instance
+
 if __name__ == "__main__":
-    db = DB('web-catalog.sqlite')
+    db = DB.get_instance('web-catalog.sqlite')
     db.connect_to_database()
 
     query_result = db.execute_query("SELECT * FROM Grocery")
