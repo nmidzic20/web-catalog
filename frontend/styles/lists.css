@@ -1,0 +1,27 @@
+#catalog {
+    padding-top: 2rem;
+    max-width: 82.5vw;
+    margin: 0 auto;
+}
+
+div #catalog {
+    margin-left: 2.5rem;
+}
+
+.grocery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 1fr;
+}
+
+.recipe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 1fr;
+}
+
+.list-additional-message {
+    margin: 20px 0;
+    padding: 20px;
+    color: limegreen;
+}

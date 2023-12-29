@@ -1,0 +1,34 @@
+/* #1a1a1a for the background, #1d2d25 for the highlight color */
+/* primary color is #ffffff, secondary is limegreen */
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    position: fixed;
+    top: 50%;
+    left: -80px;
+    transform: rotate(-90deg);
+}
+
+nav a {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #1d2d25;
+    text-transform: uppercase;
+}
+
+nav a:first-child {
+    border-bottom-right-radius: 0;
+}
+
+nav a:last-child {
+    border-bottom-left-radius: 0;
+}
+
+nav a:active {
+    color: limegreen;
+}
