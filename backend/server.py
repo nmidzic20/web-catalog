@@ -1,5 +1,7 @@
 import socket
 import time
+import json
+import threading
 
 FRONTEND_DIR = "../frontend"
 
@@ -8,22 +10,69 @@ def request_handler(request):
     headers = request.split("\n")
     request_type, requested_path, http = headers[0].split()
 
-    if requested_path == "/":
-        requested_path = "/index.html"
+    if request_type == "POST":
+        content_length = 0
+        for header in headers:
+            if "Content-Length" in header:
+                content_length = int(header.split(":")[1])
+                break
 
-    if requested_path == "/favicon.ico":
-        return ""
+        if content_length > 0:
+            body = headers[-1]
+            dataJson = body[:content_length]
 
+            print("POST request received")
+            data = json.loads(dataJson)
+
+            # pozvati funkciju za obradu iz odgovarajuce skripte
+            if requested_path == "/recipes":
+                print(data['recipe'])
+            elif requested_path == "/groceries":
+                print(data['grocery'])
+
+            return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
+    elif request_type == "GET":
+        if requested_path == "/":
+            requested_path = "/index.html"
+
+        if requested_path == "/favicon.ico":
+            return ""
+
+        try:
+            file = open(FRONTEND_DIR + requested_path)
+            file_content = file.read()
+            file.close()
+
+            response = "HTTP/1.1 200 OK\n\n" + file_content
+        except FileNotFoundError:
+            response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
+
+        return response
+    
+
+def process_request(request, client_socket):
     try:
-        file = open(FRONTEND_DIR + requested_path)
-        file_content = file.read()
-        file.close()
+        response = request_handler(request)
+        client_socket.sendall(response.encode())  # mozda ce olaksati slanje slika
+    except Exception as exc:
+        print(exc)
+    finally:
+        client_socket.close()
 
-        response = "HTTP/1.1 200 OK\n\n" + file_content
-    except FileNotFoundError:
-        response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
 
-    return response
+def handle_client(client_socket):
+    try:
+        request = client_socket.recv(4096).decode("utf-8") # mozda maknuti utf-8 zbog slika
+        print(request)
+
+        # stvori dretvu za obradu zahtjeva - omogucuje obradu svakog zahtjeva u zasebnoj dretvi
+        client_thread = threading.Thread(target=process_request, args=(request, client_socket))
+        client_thread.start()
+    except Exception as exc:
+        print(exc)
+    finally:
+        pass
+
 
 def main():
     SERVER_HOST = "127.0.0.1"
@@ -55,13 +104,7 @@ def main():
             client_socket, client_address = server_socket.accept()
             print(f"Connected to: {client_address}")
 
-            request = client_socket.recv(4096).decode("utf-8") # mozda maknuti utf-8 zbog slika
-            print(request)
-
-            response = request_handler(request)
-            client_socket.sendall(response.encode()) # mozda ce olaksati slanje slika
-
-            client_socket.close()
+            handle_client(client_socket)
 
         except Exception as exc:
             print(exc)
