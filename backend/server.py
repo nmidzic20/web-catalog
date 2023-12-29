@@ -3,6 +3,11 @@ import time
 import json
 import threading
 
+import sys
+sys.path.insert(1, '..')
+
+import backend.recipes as recipes
+
 FRONTEND_DIR = "../frontend"
 
 def request_handler(request):
@@ -75,6 +80,9 @@ def handle_client(client_socket):
 
 
 def main():
+
+    recipes.RecipeHandler().get_all_recipes()
+
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
 
