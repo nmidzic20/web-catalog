@@ -1,5 +1,7 @@
-const api = "http://localhost:8000";
-const urlRecipes = api + "/recipes";
-const urlGroceries = api + "/groceries";
+var baseUrl = "http://localhost:8000";
+var urlRecipes = baseUrl + "/recipes";
+var urlGroceries = baseUrl + "/groceries";
 
-export { urlRecipes, urlGroceries };
+var baseApiUrl = "http://localhost:8000/api";
+var apiRecipes = baseApiUrl + "/recipes";
+var apiGroceries = baseApiUrl + "/groceries";

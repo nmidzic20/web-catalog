@@ -1,5 +1,3 @@
-import { urlRecipes, urlGroceries } from "./api.js";
-
 function initAddGroceryButton() {
   initShowGroceryFormButton();
   const addGroceryButton = document.getElementById("add-grocery");

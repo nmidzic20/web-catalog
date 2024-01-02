@@ -1,3 +1,4 @@
+import mimetypes
 import socket
 import time
 import json
@@ -52,7 +53,9 @@ def request_handler(request):
             if "." not in requested_path:
                 requested_path += ".html"
 
+            mime_type, _ = mimetypes.guess_type(requested_path)
             print(requested_path)
+            print(mime_type)
 
             file = open(FRONTEND_DIR + requested_path)
             file_content = file.read()
@@ -65,7 +68,8 @@ def request_handler(request):
             else:
                 page = file_content
 
-            response = "HTTP/1.1 200 OK\n\n" + page
+            response_headers = f"HTTP/1.1 200 OK\nContent-Type: {mime_type}\n\n"
+            response = response_headers + page
         except FileNotFoundError:
             response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
 
