@@ -44,7 +44,19 @@ def request_handler(request):
             return ""
         elif requested_path == "/api/recipes":
             result = recipes.RecipeHandler().get_all_recipes()
-            response_json = json.dumps({"recipes": result})
+
+            # Convert each tuple to a dictionary
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'description': item[2]} for item in result]
+
+            # Fetch groceryItems for each recipe and add as a property
+            for recipe in list_of_dicts:
+                print(recipe)
+                recipe_id = recipe['id']
+                grocery_items = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
+                print(grocery_items)
+                recipe['groceryItems'] = grocery_items
+    
+            response_json = json.dumps({"recipes": list_of_dicts})
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
@@ -110,6 +122,8 @@ def main():
 
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
+
+    recipes.RecipeHandler().get_ingredients_for_recipe(1)
 
     connection_exception = ""
 

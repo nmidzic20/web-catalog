@@ -22,7 +22,6 @@ function fetchRecipes() {
       return response.json();
     })
     .then((data) => {
-      // Map each item in the recipes array to the Recipe model
       return data.recipes.map(
         (recipeData) =>
           new Recipe(
@@ -30,7 +29,7 @@ function fetchRecipes() {
             recipeData.name,
             recipeData.picture,
             recipeData.groceryItems,
-            recipeData.desc,
+            recipeData.description,
             recipeData.instructions
           )
       );
