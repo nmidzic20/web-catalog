@@ -38,17 +38,35 @@ def request_handler(request):
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
         if requested_path == "/":
-            requested_path = "/index.html"
+            requested_path = "/groceries"
 
         if requested_path == "/favicon.ico":
             return ""
 
         try:
+
+            index = open(FRONTEND_DIR + "/index.html")
+            index_content = index.read()
+            index.close()
+
+            print(requested_path)
+
+            if "." not in requested_path:
+                requested_path += ".html"
+
+            print(requested_path)
+
             file = open(FRONTEND_DIR + requested_path)
             file_content = file.read()
             file.close()
 
-            response = "HTTP/1.1 200 OK\n\n" + file_content
+            if ".html" in requested_path:
+                index_content = index_content.replace("#catalog#", file_content)
+                print(index_content)
+            else:
+                index_content = file_content
+
+            response = "HTTP/1.1 200 OK\n\n" + index_content
         except FileNotFoundError:
             response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
 
