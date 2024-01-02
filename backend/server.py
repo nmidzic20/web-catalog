@@ -62,7 +62,7 @@ def request_handler(request):
 
             if ".html" in requested_path:
                 index_content = index_content.replace("#catalog#", file_content)
-                print(index_content)
+                #print(index_content)
             else:
                 index_content = file_content
 
@@ -86,7 +86,7 @@ def process_request(request, client_socket):
 def handle_client(client_socket):
     try:
         request = client_socket.recv(4096).decode("utf-8") # mozda maknuti utf-8 zbog slika
-        print(request)
+        #print(request)
 
         # stvori dretvu za obradu zahtjeva - omogucuje obradu svakog zahtjeva u zasebnoj dretvi
         client_thread = threading.Thread(target=process_request, args=(request, client_socket))
