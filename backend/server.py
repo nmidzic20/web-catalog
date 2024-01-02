@@ -44,16 +44,11 @@ def request_handler(request):
             return ""
         elif requested_path == "/api/recipes":
             result = recipes.RecipeHandler().get_all_recipes()
-
-            # Convert each tuple to a dictionary
             list_of_dicts = [{'id': item[0], 'name': item[1], 'description': item[2]} for item in result]
 
-            # Fetch groceryItems for each recipe and add as a property
             for recipe in list_of_dicts:
-                print(recipe)
                 recipe_id = recipe['id']
                 grocery_items = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
-                print(grocery_items)
                 recipe['groceryItems'] = grocery_items
     
             response_json = json.dumps({"recipes": list_of_dicts})
@@ -67,6 +62,10 @@ def request_handler(request):
             index = open(FRONTEND_DIR + "/index.html")
             index_content = index.read()
             index.close()
+
+            head = open(FRONTEND_DIR + "/head.html")
+            head_content = head.read()
+            head.close()
 
             if "." not in requested_path:
                 requested_path += ".html"
@@ -83,6 +82,11 @@ def request_handler(request):
 
             if ".html" in requested_path:
                 page = index_content.replace("#catalog#", file_content)
+                page = page.replace("#head#", head_content)
+                if "groceries" in requested_path:
+                    page = page.replace("#init#", '<script defer src="./scripts/ui/init_groceries.js"></script>')
+                elif "recipes" in requested_path:
+                    page = page.replace("#init#", '<script defer src="./scripts/ui/init_recipes.js"></script>')
             else:
                 page = file_content
 
