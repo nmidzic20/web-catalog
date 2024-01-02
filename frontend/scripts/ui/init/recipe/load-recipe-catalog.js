@@ -21,7 +21,20 @@ function fetchRecipes() {
       }
       return response.json();
     })
-    .then((data) => data.recipes)
+    .then((data) => {
+      // Map each item in the recipes array to the Recipe model
+      return data.recipes.map(
+        (recipeData) =>
+          new Recipe(
+            recipeData.id,
+            recipeData.name,
+            recipeData.picture,
+            recipeData.groceryItems,
+            recipeData.desc,
+            recipeData.instructions
+          )
+      );
+    })
     .catch((error) => {
       console.error("Error fetching recipes:", error);
       return [];

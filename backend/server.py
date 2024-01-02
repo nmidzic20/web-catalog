@@ -40,9 +40,15 @@ def request_handler(request):
     elif request_type == "GET":
         if requested_path == "/":
             requested_path = "/groceries"
-
-        if requested_path == "/favicon.ico":
+        elif requested_path == "/favicon.ico":
             return ""
+        elif requested_path == "/api/recipes":
+            result = recipes.RecipeHandler().get_all_recipes()
+            response_json = json.dumps({"recipes": result})
+            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+            return response_headers + response_json
+        elif requested_path == "/api/groceries":
+            return "HTTP/1.1 200 OK\n\nThis is the groceries API endpoint\n"
 
         try:
 
@@ -101,8 +107,6 @@ def handle_client(client_socket):
 
 
 def main():
-
-    recipes.RecipeHandler().get_all_recipes()
 
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
