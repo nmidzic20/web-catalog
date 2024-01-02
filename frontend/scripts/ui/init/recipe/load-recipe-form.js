@@ -30,8 +30,6 @@ function loadAddRecipeForm() {
 
 function initGroceryListForRecipeForm() {
   function initAddGroceryForm() {
-    console.log("Init gtoceri");
-
     const groceryItems = db.groceryItems;
     const options = groceryItems.map((item) => {
       const { id, name, carbs } = item;
