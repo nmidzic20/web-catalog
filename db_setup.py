@@ -27,8 +27,8 @@ def insert_dummy_data(conn):
     cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Apple', 10);")
     cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Chicken meat', 5);")
 
-    cursor.execute("INSERT INTO Recipe (name, description) VALUES ('Apple Pie', 'Great dessert');")
-    cursor.execute("INSERT INTO Recipe (name, description) VALUES ('Chicken with Vegetables', 'Healthy meal');")
+    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Apple Pie', 'Great dessert', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.inspiredtaste.net%2F43362%2Fapple-pie%2F&psig=AOvVaw1-WsXKdAVnxYAWzkvsaP3Q&ust=1704330755973000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCICLrv-EwIMDFQAAAAAdAAAAABAD', 'No instructions needed for this meal.');")
+    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Chicken with Vegetables', 'Healthy meal', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.seriouseats.com%2Fpan-roasted-chicken-vegetables-dijon-jus-recipe&psig=AOvVaw3YJkOgNJQbE-EBHuE2BXQn&ust=1704330783103000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOjI-4mFwIMDFQAAAAAdAAAAABAI', 'No instructions needed for this meal.');")
 
     cursor.execute("INSERT INTO Ingredient (recipe_id, grocery_id, amount) VALUES (1, 1, 3);")  
     cursor.execute("INSERT INTO Ingredient (recipe_id, grocery_id, amount) VALUES (2, 2, 500);")
@@ -53,7 +53,9 @@ if __name__ == '__main__':
     sql_create_recipes_table = '''CREATE TABLE IF NOT EXISTS Recipe (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            description TEXT
+            desc TEXT,
+            picture TEXT,
+            instructions TEXT
         );
     '''
 
