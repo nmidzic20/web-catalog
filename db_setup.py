@@ -27,8 +27,8 @@ def insert_dummy_data(conn):
     cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Apple', 10);")
     cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Chicken meat', 5);")
 
-    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Apple Pie', 'Great dessert', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.inspiredtaste.net%2F43362%2Fapple-pie%2F&psig=AOvVaw1-WsXKdAVnxYAWzkvsaP3Q&ust=1704330755973000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCICLrv-EwIMDFQAAAAAdAAAAABAD', 'No instructions needed for this meal.');")
-    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Chicken with Vegetables', 'Healthy meal', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.seriouseats.com%2Fpan-roasted-chicken-vegetables-dijon-jus-recipe&psig=AOvVaw3YJkOgNJQbE-EBHuE2BXQn&ust=1704330783103000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOjI-4mFwIMDFQAAAAAdAAAAABAI', 'No instructions needed for this meal.');")
+    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Apple Pie', 'Great dessert', 'https://www.inspiredtaste.net/wp-content/uploads/2019/10/Homemade-Apple-Pie-Recipe-6-1200.jpg', 'No instructions needed for this meal.');")
+    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Chicken with Vegetables', 'Healthy meal', 'https://www.seriouseats.com/thmb/mfGNHGV3cBlpYyH49UTiUQgB8zI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/pan-roasted-chicken-vegetables-dijon-jus-recipe-hero-02_1-c3e427250efe40259dc8fab9ff66ea74.JPG', 'No instructions needed for this meal.');")
 
     cursor.execute("INSERT INTO Ingredient (recipe_id, grocery_id, amount) VALUES (1, 1, 3);")  
     cursor.execute("INSERT INTO Ingredient (recipe_id, grocery_id, amount) VALUES (2, 2, 500);")
