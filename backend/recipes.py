@@ -43,3 +43,16 @@ class RecipeHandler():
             return query_result
         finally:
             db.close_connection()
+
+    def create_recipe(self, recipe: Recipe):
+        db = DB.get_instance('../web-catalog.sqlite')
+        db.connect_to_database()
+
+        try:
+            query = f"""
+                INSERT INTO Recipe(name, desc, picture, instructions)
+                VALUES('{recipe.name}', '{recipe.desc}', '{recipe.picture}', '{recipe.instructions}');
+            """
+            db.execute_run_query(query)
+        finally:
+            db.close_connection()
