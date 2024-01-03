@@ -1,7 +1,3 @@
-const api = "http://localhost:8000";
-const urlRecipes = api + "/recipes";
-const urlGroceries = api + "/groceries";
-
 function initAddGroceryButton() {
   initShowGroceryFormButton();
   const addGroceryButton = document.getElementById("add-grocery");

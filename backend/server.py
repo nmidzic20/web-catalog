@@ -1,3 +1,4 @@
+import mimetypes
 import socket
 import time
 import json
@@ -38,17 +39,59 @@ def request_handler(request):
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
         if requested_path == "/":
-            requested_path = "/index.html"
-
-        if requested_path == "/favicon.ico":
+            requested_path = "/groceries"
+        elif requested_path == "/favicon.ico":
             return ""
+        elif requested_path == "/api/recipes":
+            result = recipes.RecipeHandler().get_all_recipes()
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'description': item[2]} for item in result]
+
+            for recipe in list_of_dicts:
+                recipe_id = recipe['id']
+                grocery_items = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
+                recipe['groceryItems'] = grocery_items
+    
+            response_json = json.dumps({"recipes": list_of_dicts})
+            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+            return response_headers + response_json
+        elif requested_path == "/api/groceries":
+            return "HTTP/1.1 200 OK\n\nThis is the groceries API endpoint\n"
 
         try:
+
+            index = open(FRONTEND_DIR + "/index.html")
+            index_content = index.read()
+            index.close()
+
+            head = open(FRONTEND_DIR + "/head.html")
+            head_content = head.read()
+            head.close()
+
+            if "." not in requested_path:
+                requested_path += ".html"
+
+            mime_type, _ = mimetypes.guess_type(requested_path)
+            print(requested_path)
+            print(mime_type)
+
             file = open(FRONTEND_DIR + requested_path)
             file_content = file.read()
             file.close()
 
-            response = "HTTP/1.1 200 OK\n\n" + file_content
+            page = ""
+
+            if ".html" in requested_path:
+                page = index_content.replace("#catalog#", file_content)
+                page = page.replace("#head#", head_content)
+                if "groceries" in requested_path:
+                    page = page.replace("#init#", '<script defer src="./scripts/ui/init_groceries.js"></script>')
+                elif "recipes" in requested_path:
+                    page = page.replace("#init#", '<script defer src="./scripts/ui/init_recipes.js"></script>')
+            else:
+                page = file_content
+
+            response_headers = f"HTTP/1.1 200 OK\nContent-Type: {mime_type}\n\n"
+            response = response_headers + page
         except FileNotFoundError:
             response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
 
@@ -81,10 +124,10 @@ def handle_client(client_socket):
 
 def main():
 
-    recipes.RecipeHandler().get_all_recipes()
-
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
+
+    recipes.RecipeHandler().get_ingredients_for_recipe(1)
 
     connection_exception = ""
 
