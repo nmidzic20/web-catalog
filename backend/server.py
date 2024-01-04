@@ -10,6 +10,7 @@ sys.path.insert(1, '..')
 import backend.recipes as recipes
 
 FRONTEND_DIR = "../frontend"
+IMAGE_DIR = "../images"
 
 def request_handler(request):
 
@@ -64,6 +65,14 @@ def request_handler(request):
             return response_headers + response_json
         elif requested_path == "/api/groceries":
             return "HTTP/1.1 200 OK\n\nThis is the groceries API endpoint\n"
+        elif "/api/images/" in requested_path:
+            mime_type, _ = mimetypes.guess_type(requested_path)
+
+            image = open(IMAGE_DIR + requested_path.split("api/images")[1], "rb")
+            image_content = image.read()
+            image.close()
+
+            return (f"HTTP/1.1 200 OK\r\nContent-Type: {mime_type}\r\nAccept-Ranges: bytes\r\n\r\n", image_content)
 
         try:
 
@@ -109,7 +118,12 @@ def request_handler(request):
 def process_request(request, client_socket):
     try:
         response = request_handler(request)
-        client_socket.sendall(response.encode())  # mozda ce olaksati slanje slika
+
+        if isinstance(response, tuple):
+            client_socket.send(response[0].encode())
+            client_socket.send(response[1])
+        else:
+            client_socket.sendall(response.encode())  # mozda ce olaksati slanje slika
     except Exception as exc:
         print(exc)
     finally:
