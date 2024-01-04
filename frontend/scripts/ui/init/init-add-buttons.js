@@ -80,6 +80,7 @@ function initAddRecipeButton() {
       .then((response) => response.text())
       .then((data) => {
         console.log("Response from server:", data);
+        insertRecipesIntoGrid();
       })
       .catch((error) => {
         console.error("Error:", error);

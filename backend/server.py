@@ -32,7 +32,15 @@ def request_handler(request):
 
             # pozvati funkciju za obradu iz odgovarajuce skripte
             if requested_path == "/recipes":
-                print(data['recipe'])
+                if "id" in data['recipe']:
+                    del data['recipe']['id']
+
+                # ove 2 linije ispod maknuti nakon što se implementira slanje groceryItems s frontenda
+                # kada se to implementira, onda se može ovdje handlati insert u Ingredient tablicu
+                if "groceryItems" in data['recipe']:
+                    del data['recipe']['groceryItems']
+
+                recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
             elif requested_path == "/groceries":
                 print(data['grocery'])
 
@@ -44,7 +52,7 @@ def request_handler(request):
             return ""
         elif requested_path == "/api/recipes":
             result = recipes.RecipeHandler().get_all_recipes()
-            list_of_dicts = [{'id': item[0], 'name': item[1], 'description': item[2]} for item in result]
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'picture': item[3], 'instructions': item[4]} for item in result]
 
             for recipe in list_of_dicts:
                 recipe_id = recipe['id']
