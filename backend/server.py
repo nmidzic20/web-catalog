@@ -68,11 +68,14 @@ def request_handler(request):
         elif "/api/images/" in requested_path:
             mime_type, _ = mimetypes.guess_type(requested_path)
 
-            image = open(IMAGE_DIR + requested_path.split("api/images")[1], "rb")
-            image_content = image.read()
-            image.close()
-
-            return (f"HTTP/1.1 200 OK\r\nContent-Type: {mime_type}\r\nAccept-Ranges: bytes\r\n\r\n", image_content)
+            try:
+                image = open(IMAGE_DIR + requested_path.split("api/images")[1], "rb")
+                image_content = image.read()
+                image.close()
+                return (f"HTTP/1.1 200 OK\r\nContent-Type: {mime_type}\r\nAccept-Ranges: bytes\r\n\r\n", image_content)
+                
+            except FileNotFoundError:
+                return f"HTTP/1.1 404 OK\r\nContent-Type: {mime_type}\r\n\r\nImage not found"
 
         try:
 
