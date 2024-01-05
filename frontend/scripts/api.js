@@ -48,7 +48,7 @@ function fetchGroceries() {
             groceryData.id,
             groceryData.name,
             groceryData.carbs,
-            groceryData.image
+            groceryData.picture
           )
       );
     })

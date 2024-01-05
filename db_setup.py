@@ -24,8 +24,8 @@ def execute_commands(conn, command):
 def insert_dummy_data(conn):
     cursor = conn.cursor()
     
-    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Apple', 10);")
-    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Chicken meat', 5);")
+    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Apple', 10, 'https://www.biobio.hr/upload/catalog/product/28233/thumb/18301_650x650r.webp');")
+    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Chicken meat', 5, 'https://www.vecernji.hr/media/img/35/dd/a1fcf70b5c25696ff01d.jpeg');")
 
     cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Apple Pie', 'Great dessert', 'https://www.inspiredtaste.net/wp-content/uploads/2019/10/Homemade-Apple-Pie-Recipe-6-1200.jpg', 'No instructions needed for this meal.');")
     cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Chicken with Vegetables', 'Healthy meal', 'https://www.seriouseats.com/thmb/mfGNHGV3cBlpYyH49UTiUQgB8zI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/pan-roasted-chicken-vegetables-dijon-jus-recipe-hero-02_1-c3e427250efe40259dc8fab9ff66ea74.JPG', 'No instructions needed for this meal.');")
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             carbs INTEGER NOT NULL,
-            picture BLOB
+            picture TEXT
         );
     '''
 
