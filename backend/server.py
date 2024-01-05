@@ -35,9 +35,12 @@ def request_handler(request):
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
+                print("Grocery items ")
+
                 # ove 2 linije ispod maknuti nakon što se implementira slanje groceryItems s frontenda
                 # kada se to implementira, onda se može ovdje handlati insert u Ingredient tablicu
                 if "groceryItems" in data['recipe']:
+                    print(data['recipe']['groceryItems'])
                     del data['recipe']['groceryItems']
 
                 recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
@@ -134,8 +137,6 @@ def main():
 
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
-
-    recipes.RecipeHandler().get_ingredients_for_recipe(1)
 
     connection_exception = ""
 

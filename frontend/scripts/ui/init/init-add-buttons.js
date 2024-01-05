@@ -49,10 +49,11 @@ function initAddRecipeButton() {
     );
 
     selectedItems.forEach((item) => {
-      var id = parseInt(item.value.split("-")[0]);
+      groceryItems.push(item.text);
+      /*var id = parseInt(item.value.split("-")[0]);
       if (db.groceryItems.includes(id)) {
         groceryItems.push(id);
-      }
+      }*/
     });
 
     var recipe = new Recipe(
@@ -63,7 +64,8 @@ function initAddRecipeButton() {
       document.getElementById("recipe-description").value,
       document.getElementById("recipe-instructions").value
     );
-    db.addRecipe(recipe);
+
+    console.log(recipe);
 
     const body = {
       recipe: recipe,
