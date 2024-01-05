@@ -35,8 +35,6 @@ def request_handler(request):
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
-                print("Grocery items ")
-
                 # ove 2 linije ispod maknuti nakon što se implementira slanje groceryItems s frontenda
                 # kada se to implementira, onda se može ovdje handlati insert u Ingredient tablicu
                 if "groceryItems" in data['recipe']:

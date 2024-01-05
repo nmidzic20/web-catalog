@@ -8,27 +8,14 @@ function initAddGroceryButton() {
       document.getElementById("grocery-carbs").value,
       document.getElementById("grocery-image").value
     );
-    db.addGrocery(grocery);
+    //db.addGrocery(grocery);
 
     const body = {
       grocery: grocery,
     };
     const jsonBody = JSON.stringify(body);
 
-    fetch(urlGroceries, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Response from server:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    postGroceries(jsonBody);
   });
 }
 
@@ -65,28 +52,12 @@ function initAddRecipeButton() {
       document.getElementById("recipe-instructions").value
     );
 
-    console.log(recipe);
-
     const body = {
       recipe: recipe,
     };
     const jsonBody = JSON.stringify(body);
 
-    fetch(urlRecipes, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Response from server:", data);
-        insertRecipesIntoGrid();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    postRecipe(jsonBody);
   });
 }
 

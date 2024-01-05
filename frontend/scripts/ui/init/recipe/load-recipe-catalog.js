@@ -13,33 +13,6 @@ function insertTempRecipeGrid() {
   }
 }
 
-function fetchRecipes() {
-  return fetch(apiRecipes)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data.recipes.map(
-        (recipeData) =>
-          new Recipe(
-            recipeData.id,
-            recipeData.name,
-            recipeData.picture,
-            recipeData.groceryItems,
-            recipeData.description,
-            recipeData.instructions
-          )
-      );
-    })
-    .catch((error) => {
-      console.error("Error fetching recipes:", error);
-      return [];
-    });
-}
-
 function insertRecipesIntoGrid() {
   const grid = document.getElementById("recipes");
 
