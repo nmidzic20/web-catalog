@@ -30,13 +30,15 @@ function loadAddRecipeForm() {
 
 function initGroceryListForRecipeForm() {
   function initAddGroceryForm() {
-    const groceryItems = db.groceryItems;
-    const options = groceryItems.map((item) => {
-      const { id, name, carbs } = item;
-      return `<option value="${id}">${name} (carbs: ${carbs}g)</option>`;
+    fetchGroceries().then((groceries) => {
+      const options = groceries.map((item) => {
+        const { id, name, carbs } = item;
+        return `<option value="${id}">${name} (carbs: ${carbs}g)</option>`;
+      });
+
+      const selectInput = document.getElementById("recipe-groceries-list");
+      selectInput.innerHTML = options.join("");
     });
-    const selectInput = document.getElementById("recipe-groceries-list");
-    selectInput.innerHTML = options.join("");
   }
   initAddGroceryForm();
 }

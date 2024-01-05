@@ -9,6 +9,7 @@ sys.path.insert(1, '..')
 
 import backend.recipes as recipes
 import backend.groceries as groceries
+import backend.ingredients as ingredients
 
 FRONTEND_DIR = "../frontend"
 
@@ -40,7 +41,7 @@ def request_handler(request):
                     del data['recipe']['groceryItems']
 
                 newRecipe = recipes.Recipe(**data['recipe'])
-                recipes.RecipeHandler().create_recipe(newRecipe)
+                newRecipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
 
                 ingredientArray = data['ingredients']
                 print(ingredientArray)
@@ -50,7 +51,7 @@ def request_handler(request):
                     print(ingredient['grocery']['carbs'])
                     print(ingredient['grocery']['image'])
                     print(ingredient['amount'])
-                    #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient['grocery']['id'], ingredient['amount'] )
+                    ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
                 if "id" in data['grocery']:
