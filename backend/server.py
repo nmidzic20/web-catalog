@@ -31,19 +31,25 @@ def request_handler(request):
             data = json.loads(dataJson)
 
             if requested_path == "/recipes":
+                # obrisati da ne stvara problem kod inicijalizacije Recipea
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
                 if "groceryItems" in data['recipe']:
-                    print(data['recipe']['groceryItems'])
-                    # pospremiti u Ingredient tablicu, onda obrisati da ne stvara problem kod inicijalizacije Recipea
                     del data['recipe']['groceryItems']
-                  
-                recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
 
+                newRecipe = recipes.Recipe(**data['recipe'])
+                recipes.RecipeHandler().create_recipe(newRecipe)
+
+                ingredientArray = data['ingredients']
+                for ingredient in ingredientArray:
+                    print(ingredient.id + " " + ingredient.name + " " + ingredient.carbs + " " + ingredient.image)
+                    #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient.id, amount)
+                  
             elif requested_path == "/groceries":
                 print(data['grocery'])
-                # groceries.GroceryHandler().create_grocery(groceries.Grocery(**data['grocery']))
+                # newGrocery = groceries.Grocery(**data['grocery'])
+                # groceries.GroceryHandler().create_grocery(newGrocery)
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":

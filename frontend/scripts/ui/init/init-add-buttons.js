@@ -35,27 +35,43 @@ function initAddRecipeButton() {
       "#recipe-groceries-list option:checked"
     );
 
-    selectedItems.forEach((item) => {
-      groceryItems.push(item.text);
-      /*var id = parseInt(item.value.split("-")[0]);
+    //selectedItems.forEach((item) => {
+    //groceryItems.push(item.text);
+    /*var id = parseInt(item.value.split("-")[0]);
       if (db.groceryItems.includes(id)) {
         groceryItems.push(id);
       }*/
-    });
+    //});
 
     var recipe = new Recipe(
       -1,
       document.getElementById("recipe-name").value,
       document.getElementById("recipe-image").value,
-      groceryItems,
+      [],
       document.getElementById("recipe-description").value,
       document.getElementById("recipe-instructions").value
     );
 
+    var groceryObjects = [];
+
+    selectedItems.forEach((item) => {
+      var match = item.text.match(/(.+) \(carbs: (\d+)(?:g)?\)/);
+      if (match) {
+        let id = item.value;
+        let name = match[1];
+        let carbs = parseInt(match[2]);
+        let image = "";
+        groceryObjects.push(new Grocery(id, name, carbs, image));
+      } else groceryObjects.push({});
+    });
+
     const body = {
       recipe: recipe,
+      ingredients: groceryObjects,
     };
     const jsonBody = JSON.stringify(body);
+
+    console.log(body);
 
     postRecipe(jsonBody);
   });
