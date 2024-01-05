@@ -34,10 +34,10 @@ def request_handler(request):
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
-                if "id" in data['recipe']:
+                if "groceryItems" in data['recipe']:
                     print(data['recipe']['groceryItems'])
                     # pospremiti u Ingredient tablicu, onda obrisati da ne stvara problem kod inicijalizacije Recipea
-                    del data['recipe']['id']
+                    del data['recipe']['groceryItems']
                   
                 recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
 
