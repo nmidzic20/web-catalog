@@ -78,7 +78,13 @@ def request_handler(request):
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
-            return "HTTP/1.1 200 OK\n\nThis is the groceries API endpoint\n"
+            result = groceries.GroceryHandler().get_all_groceries()
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
+
+            response_json = json.dumps({"groceries": list_of_dicts})
+            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+
+            return response_headers + response_json
 
         try:
 
