@@ -44,11 +44,12 @@ def request_handler(request):
                 ingredientArray = data['ingredients']
                 print(ingredientArray)
                 for ingredient in ingredientArray:
-                    print(ingredient['id'])
-                    print(ingredient['name'])
-                    print(ingredient['carbs'])
-                    print(ingredient['image'])
-                    #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient['id'], amount)
+                    print(ingredient['grocery']['id'])
+                    print(ingredient['grocery']['name'])
+                    print(ingredient['grocery']['carbs'])
+                    print(ingredient['grocery']['image'])
+                    print(ingredient['amount'])
+                    #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient['grocery']['id'], ingredient['amount'] )
                   
             elif requested_path == "/groceries":
                 print(data['grocery'])

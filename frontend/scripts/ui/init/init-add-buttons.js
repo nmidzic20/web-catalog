@@ -52,7 +52,24 @@ function initAddRecipeButton() {
       document.getElementById("recipe-instructions").value
     );
 
-    var groceryObjects = [];
+    var ingredients = [];
+    var groceryAmounts = {};
+
+    // Access all grocery amounts
+    const groceryAmountCollection =
+      document.getElementById("grocery-amounts").children;
+    console.log(groceryAmountCollection);
+    for (let item of groceryAmountCollection) {
+      if (!item.value) item.value = 0;
+      console.log(item.id);
+      console.log(item.value);
+
+      const number = item.id.match(/\d+/);
+      const extractedNumber = parseInt(number[0]);
+      console.log(extractedNumber);
+
+      groceryAmounts[extractedNumber] = item.value;
+    }
 
     selectedItems.forEach((item) => {
       var match = item.text.match(/(.+) \(carbs: (\d+)(?:g)?\)/);
@@ -61,13 +78,20 @@ function initAddRecipeButton() {
         let name = match[1];
         let carbs = parseInt(match[2]);
         let image = "";
-        groceryObjects.push(new Grocery(id, name, carbs, image));
-      } else groceryObjects.push({});
+        console.log(groceryAmounts);
+        console.log(groceryAmounts[id]);
+        ingredients.push(
+          new Ingredient(
+            new Grocery(id, name, carbs, image),
+            groceryAmounts[id]
+          )
+        );
+      } else ingredients.push({});
     });
 
     const body = {
       recipe: recipe,
-      ingredients: groceryObjects,
+      ingredients: ingredients,
     };
     const jsonBody = JSON.stringify(body);
 

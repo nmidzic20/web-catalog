@@ -45,10 +45,13 @@ function initAddRecipeForm() {
   initGroceryListForRecipeForm();
   const selectInput = document.getElementById("recipe-groceries-list");
   const groceryAmounts = document.getElementById("grocery-amounts");
-  // const groceryAmountsButton = document.getElementById("grocery-amounts-button");
-  // groceryAmountsButton.onclick = (function() {
-  //     changeVisibility(groceryAmounts.id);
-  // });
+  //const groceryAmountsButton = document.getElementById(
+  //  "grocery-amounts-button"
+  //);
+  //groceryAmountsButton.onclick = function () {
+  //changeVisibility(groceryAmounts.id);
+  //};
+
   selectInput.onchange = function () {
     const selectedOptions = Array.from(selectInput.selectedOptions);
     const selectedOptionCount = selectedOptions.length;
