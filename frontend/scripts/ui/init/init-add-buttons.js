@@ -8,27 +8,14 @@ function initAddGroceryButton() {
       document.getElementById("grocery-carbs").value,
       document.getElementById("grocery-image").value
     );
-    db.addGrocery(grocery);
+    //db.addGrocery(grocery);
 
     const body = {
       grocery: grocery,
     };
     const jsonBody = JSON.stringify(body);
 
-    fetch(urlGroceries, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Response from server:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    postGroceries(jsonBody);
   });
 }
 
@@ -48,43 +35,69 @@ function initAddRecipeButton() {
       "#recipe-groceries-list option:checked"
     );
 
-    selectedItems.forEach((item) => {
-      var id = parseInt(item.value.split("-")[0]);
+    //selectedItems.forEach((item) => {
+    //groceryItems.push(item.text);
+    /*var id = parseInt(item.value.split("-")[0]);
       if (db.groceryItems.includes(id)) {
         groceryItems.push(id);
-      }
-    });
+      }*/
+    //});
 
     var recipe = new Recipe(
       -1,
       document.getElementById("recipe-name").value,
       document.getElementById("recipe-image").value,
-      groceryItems,
+      [],
       document.getElementById("recipe-description").value,
       document.getElementById("recipe-instructions").value
     );
-    db.addRecipe(recipe);
+
+    var ingredients = [];
+    var groceryAmounts = {};
+
+    // Access all grocery amounts
+    const groceryAmountCollection =
+      document.getElementById("grocery-amounts").children;
+    console.log(groceryAmountCollection);
+    for (let item of groceryAmountCollection) {
+      if (!item.value) item.value = 0;
+      console.log(item.id);
+      console.log(item.value);
+
+      const number = item.id.match(/\d+/);
+      const extractedNumber = parseInt(number[0]);
+      console.log(extractedNumber);
+
+      groceryAmounts[extractedNumber] = item.value;
+    }
+
+    selectedItems.forEach((item) => {
+      var match = item.text.match(/(.+) \(carbs: (\d+)(?:g)?\)/);
+      if (match) {
+        let id = item.value;
+        let name = match[1];
+        let carbs = parseInt(match[2]);
+        let image = "";
+        console.log(groceryAmounts);
+        console.log(groceryAmounts[id]);
+        ingredients.push(
+          new Ingredient(
+            new Grocery(id, name, carbs, image),
+            groceryAmounts[id]
+          )
+        );
+      } else ingredients.push({});
+    });
 
     const body = {
       recipe: recipe,
+      ingredients: ingredients,
     };
     const jsonBody = JSON.stringify(body);
 
-    fetch(urlRecipes, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Response from server:", data);
-        insertRecipesIntoGrid();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    console.log(body);
+
+    postRecipe(jsonBody);
   });
 }
 

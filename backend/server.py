@@ -30,19 +30,31 @@ def request_handler(request):
             print("POST request received")
             data = json.loads(dataJson)
 
-            # pozvati funkciju za obradu iz odgovarajuce skripte
             if requested_path == "/recipes":
+                # obrisati da ne stvara problem kod inicijalizacije Recipea
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
-                # ove 2 linije ispod maknuti nakon što se implementira slanje groceryItems s frontenda
-                # kada se to implementira, onda se može ovdje handlati insert u Ingredient tablicu
                 if "groceryItems" in data['recipe']:
                     del data['recipe']['groceryItems']
 
-                recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
+                newRecipe = recipes.Recipe(**data['recipe'])
+                recipes.RecipeHandler().create_recipe(newRecipe)
+
+                ingredientArray = data['ingredients']
+                print(ingredientArray)
+                for ingredient in ingredientArray:
+                    print(ingredient['grocery']['id'])
+                    print(ingredient['grocery']['name'])
+                    print(ingredient['grocery']['carbs'])
+                    print(ingredient['grocery']['image'])
+                    print(ingredient['amount'])
+                    #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient['grocery']['id'], ingredient['amount'] )
+                  
             elif requested_path == "/groceries":
                 print(data['grocery'])
+                # newGrocery = groceries.Grocery(**data['grocery'])
+                # groceries.GroceryHandler().create_grocery(newGrocery)
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
@@ -134,8 +146,6 @@ def main():
 
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
-
-    recipes.RecipeHandler().get_ingredients_for_recipe(1)
 
     connection_exception = ""
 
