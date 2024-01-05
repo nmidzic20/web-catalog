@@ -30,20 +30,20 @@ def request_handler(request):
             print("POST request received")
             data = json.loads(dataJson)
 
-            # pozvati funkciju za obradu iz odgovarajuce skripte
             if requested_path == "/recipes":
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
-                # ove 2 linije ispod maknuti nakon što se implementira slanje groceryItems s frontenda
-                # kada se to implementira, onda se može ovdje handlati insert u Ingredient tablicu
-                if "groceryItems" in data['recipe']:
+                if "id" in data['recipe']:
                     print(data['recipe']['groceryItems'])
-                    del data['recipe']['groceryItems']
-
+                    # pospremiti u Ingredient tablicu, onda obrisati da ne stvara problem kod inicijalizacije Recipea
+                    del data['recipe']['id']
+                  
                 recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
+
             elif requested_path == "/groceries":
                 print(data['grocery'])
+                # groceries.GroceryHandler().create_grocery(groceries.Grocery(**data['grocery']))
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
