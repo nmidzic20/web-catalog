@@ -15,7 +15,7 @@ function initAddGroceryButton() {
     };
     const jsonBody = JSON.stringify(body);
 
-    postGroceries(jsonBody);
+    postGrocery(jsonBody);
   });
 }
 

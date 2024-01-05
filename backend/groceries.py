@@ -4,13 +4,13 @@ from database import DB
 class Grocery:
     id: int
     name: str
-    carbs: float
-    picture: str
+    carbs: int
+    image: str
 
-    def __init__(self, name, carbs, picture):
+    def __init__(self, name, carbs, image):
         self.name = name
         self.carbs = carbs
-        self.picture = picture
+        self.image = image
 
 
 class GroceryHandler:
@@ -32,7 +32,7 @@ class GroceryHandler:
         try:
             query = f"""
                 INSERT INTO Grocery(name, carbs, picture)
-                VALUES('{grocery.name}', '{grocery.carbs}', '{grocery.picture}');
+                VALUES('{grocery.name}', '{grocery.carbs}', '{grocery.image}');
             """
             db.execute_run_query(query)
         finally:

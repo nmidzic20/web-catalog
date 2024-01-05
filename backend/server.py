@@ -8,6 +8,7 @@ import sys
 sys.path.insert(1, '..')
 
 import backend.recipes as recipes
+import backend.groceries as groceries
 
 FRONTEND_DIR = "../frontend"
 
@@ -52,9 +53,11 @@ def request_handler(request):
                     #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient['grocery']['id'], ingredient['amount'] )
                   
             elif requested_path == "/groceries":
-                print(data['grocery'])
-                # newGrocery = groceries.Grocery(**data['grocery'])
-                # groceries.GroceryHandler().create_grocery(newGrocery)
+                if "id" in data['grocery']:
+                    del data['grocery']['id']
+
+                newGrocery = groceries.Grocery(**data['grocery'])
+                groceries.GroceryHandler().create_grocery(newGrocery)
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
