@@ -19,7 +19,7 @@ select {
   align-items: center;
   margin: 1rem 0;
   padding: 0.5rem;
-  width: 10rem;
+  /*width: 10rem;*/
   border-radius: 8px;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -79,7 +79,6 @@ label input {
   margin-right: 0.5rem;
 }
 
-/* Add styles to create a card overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -100,7 +99,12 @@ label input {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 2;
-  width: 300px;
+  width: 400px;
+
+  /* ogranici visinu ako je kartica preduga */
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #close-icon {

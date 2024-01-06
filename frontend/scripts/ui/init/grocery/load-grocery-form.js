@@ -3,7 +3,7 @@ function loadAddGroceryForm() {
   groceriesHeading.outerHTML += `
     <div class="overlay hidden" id="grocery-form">
     <div id="form-card">
-        <span id="close-icon" onclick="closeForm()">&times;</span>
+        <span id="close-icon" onclick="closeForm('grocery-form')">&times;</span>
         <form>
             <fieldset>
                 <label for="grocery-name">Grocery Name:</label>

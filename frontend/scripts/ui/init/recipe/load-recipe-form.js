@@ -1,31 +1,36 @@
 function loadAddRecipeForm() {
   const recipesHeading = document.getElementById("recipes-heading");
   recipesHeading.outerHTML += `
-        <form id="recipe-form" class="hidden">
-            <label for="recipe-groceries-list">Groceries:</label>
+    <div class="overlay hidden" id="recipe-form">
+      <div id="form-card">
+        <span id="close-icon" onclick="closeForm('recipe-form')">&times;</span>
+        <form>
+          <fieldset>
             <fieldset>
-                <fieldset>
-                    <select id="recipe-groceries-list" name="recipe-groceries-list" multiple style="min-width: 200px; height: 200px; overflow: auto;"></select>
-                    <fieldset id="grocery-amounts" class="hidden"></fieldset>
-                </fieldset>
-                <!-- <input type="button" id="grocery-amounts-button" value="Grocery amounts"> -->
-                <fieldset style="flex-direction: column; width: 350px;">
-                    <fieldset>
-                        <label for="recipe-name">Name:</label>
-                        <input type="text" id="recipe-name" name="recipe-name" required>
-                        <label for="recipe-image">Image:</label>
-                        <input type="text" id="recipe-image" name="recipe-image">
-                    </fieldset>
-                    <fieldset>
-                        <label for="recipe-description">Description:</label>
-                        <textarea id="recipe-description" name="recipe-description" required></textarea>
-                        <label for="recipe-instructions">Tutorial:</label>
-                        <textarea id="recipe-instructions" name="recipe-instructions" required></textarea>
-                    </fieldset>
-                    <input type="button" value="Add new recipe" id="add-recipe" style="margin-top: 0; margin-left: auto; margin-right: 1rem !important;">
-                </fieldset>
+              <label for="recipe-groceries-list">Groceries:</label>
+              <select id="recipe-groceries-list" name="recipe-groceries-list" multiple style="min-width: 200px; height: 200px; overflow: auto;"></select>
+              <fieldset id="grocery-amounts" class="hidden"></fieldset>
             </fieldset>
-        </form>`;
+            <!-- <input type="button" id="grocery-amounts-button" value="Grocery amounts"> -->
+            <fieldset>
+              <fieldset>
+                <label for="recipe-name">Name:</label>
+                <input type="text" id="recipe-name" name="recipe-name" required>
+                <label for="recipe-image">Image:</label>
+                <input type="text" id="recipe-image" name="recipe-image">
+              </fieldset>
+              <fieldset>
+                <label for="recipe-description">Description:</label>
+                <textarea id="recipe-description" name="recipe-description" required></textarea>
+                <label for="recipe-instructions">Tutorial:</label>
+                <textarea id="recipe-instructions" name="recipe-instructions" required></textarea>
+              </fieldset>
+              <input type="button" value="Add new recipe" id="add-recipe">
+            </fieldset>
+          </fieldset>
+        </form>
+      </div>
+    </div>`;
 }
 
 function initGroceryListForRecipeForm() {
@@ -47,12 +52,6 @@ function initAddRecipeForm() {
   initGroceryListForRecipeForm();
   const selectInput = document.getElementById("recipe-groceries-list");
   const groceryAmounts = document.getElementById("grocery-amounts");
-  //const groceryAmountsButton = document.getElementById(
-  //  "grocery-amounts-button"
-  //);
-  //groceryAmountsButton.onclick = function () {
-  //changeVisibility(groceryAmounts.id);
-  //};
 
   selectInput.onchange = function () {
     const selectedOptions = Array.from(selectInput.selectedOptions);

@@ -115,6 +115,6 @@ function initShowRecipeFormButton() {
   });
 }
 
-function closeForm() {
-  changeVisibility("grocery-form");
+function closeForm(id) {
+  changeVisibility(id);
 }
