@@ -72,7 +72,7 @@ function initAddRecipeButton() {
 
     // Access all grocery amounts
     const groceryAmountCollection =
-      document.getElementById("grocery-amounts").children;
+      document.getElementsByClassName("grocery-amounts");
     console.log(groceryAmountCollection);
     for (let item of groceryAmountCollection) {
       if (!item.value) item.value = 0;

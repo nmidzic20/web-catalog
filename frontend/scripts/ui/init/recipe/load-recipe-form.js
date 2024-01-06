@@ -19,7 +19,7 @@ function loadAddRecipeForm() {
                 <div class="row">
                   <select id="recipe-groceries-list" name="recipe-groceries-list">
                   </select>
-                  <input type="number" id="grocery-amounts" name="grocery-amounts" min="1" value="1">
+                  <input type="number" class="grocery-amounts" name="grocery-amounts" min="1" value="1">
                   <button id="remove-row" onclick="removeRow(this)" style="margin:10px;">
                     <i class="fas fa-trash-alt"></i> 
                   </button>
@@ -63,6 +63,8 @@ function initGroceryListForRecipeForm() {
 
       let originalRows = document.querySelectorAll(".row");
 
+      setGroceryAmountInputId(originalRows[1]);
+
       document
         .getElementById("addRow")
         .addEventListener("click", function (event) {
@@ -90,6 +92,10 @@ function initGroceryListForRecipeForm() {
             document.getElementById("addRow").style.display = "none";
 
           this.parentNode.insertBefore(newRow, this);
+
+          removeSelectOnChangeListeners();
+          setSelectOnChangeListeners();
+          setGroceryAmountInputId(newRow);
         });
     });
   }
@@ -98,10 +104,12 @@ function initGroceryListForRecipeForm() {
 
 function initAddRecipeForm() {
   initGroceryListForRecipeForm();
-  const selectInput = document.getElementById("recipe-groceries-list");
+
   const groceryAmounts = document.getElementById("grocery-amounts");
 
-  selectInput.onchange = function () {
+  setSelectOnChangeListeners();
+
+  /*selectInput.onchange = function () {
     const selectedOptions = Array.from(selectInput.selectedOptions);
     const selectedOptionCount = selectedOptions.length;
     if (selectedOptionCount == 0) {
@@ -127,5 +135,5 @@ function initAddRecipeForm() {
       );
       groceryAmounts.appendChild(numberInput);
     }
-  };
+  };*/
 }

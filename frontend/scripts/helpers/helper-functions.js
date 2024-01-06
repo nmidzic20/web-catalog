@@ -71,3 +71,37 @@ function displayDeleteButtonForGroceries() {
     if (trashButton) trashButton.style.display = "";
   }
 }*/
+
+function setGroceryAmountInputId(row) {
+  let selectedOption = row.querySelector("select option:checked");
+
+  // set the id attribute of the groceryAmount input number to be equal to that grocery's id
+  if (selectedOption) {
+    let selectedGroceryId = selectedOption.value;
+    row.querySelector(".grocery-amounts").id = `${selectedGroceryId}`;
+    console.log("Changed to id " + selectedOption.value);
+  }
+}
+
+function setSelectOnChangeListeners() {
+  let selectInputs = document.querySelectorAll("#recipe-groceries-list");
+  selectInputs.forEach(
+    (selectInput) =>
+      (selectInput.onchange = function (event) {
+        const changedSelect = event.target;
+        // find the closest ancestor with class 'row'
+        const row = changedSelect.closest(".row");
+
+        setGroceryAmountInputId(row);
+      })
+  );
+}
+
+function removeSelectOnChangeListeners() {
+  let selectInputs = document.querySelectorAll("#recipe-groceries-list");
+  selectInputs.forEach((selectInput) => {
+    if (selectInput.onchange) {
+      selectInput.removeEventListener("change", selectInput.onchange);
+    }
+  });
+}
