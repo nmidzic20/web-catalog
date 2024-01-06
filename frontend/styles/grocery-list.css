@@ -1,23 +1,23 @@
 .grocery-details {
-    width: 200px;
-    height: 300px;
-    background-color: #1d2d25;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
+  width: 200px;
+  height: 300px;
+  background-color: var(--primary-color);
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .grocery-details img {
-    width: 100%;
-    height: auto;
-    max-height: 70%;
-    border-radius: 10px;
-    padding-bottom: 10px;
+  width: 100%;
+  height: auto;
+  max-height: 70%;
+  border-radius: 10px;
+  padding-bottom: 10px;
 }
 
 .grocery-details p {
-    margin-top: 10px;
-    font-size: 16px;
+  margin-top: 10px;
+  font-size: 16px;
 }

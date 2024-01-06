@@ -6,32 +6,32 @@ body {
 }
 
 html {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: var(--background-color);
+  color: var(--text-color);
   scroll-behavior: smooth;
 }
 
 header {
-  background-color: #1d2d25;
+  background-color: var(--primary-color);
   padding: 20px;
   text-align: center;
 }
 
 body {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: Arial, sans-serif;
 }
 
 footer {
   margin-top: 2rem;
-  background-color: #1d2d25;
+  background-color: var(--primary-color);
   padding: 10px;
   text-align: center;
 }
 
 a {
-  color: #ffffff;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -62,8 +62,8 @@ select {
   padding: 0.5rem;
   width: 10rem;
   border-radius: 8px;
-  background-color: #1d2d25;
-  color: #ffffff;
+  background-color: var(--primary-color);
+  color: var(--text-color);
 }
 
 #grocery-amounts input {
@@ -73,12 +73,12 @@ select {
   padding: 0.5rem 1rem;
   margin: 0;
   border-radius: 8px;
-  background-color: #1d2d25;
-  color: #ffffff;
+  background-color: var(--primary-color);
+  color: var(--text-color);
 }
 
 #grocery-amounts {
-  border: 1px solid white;
+  border: 1px solid var(--text-color);
   background-color: #0c4d17;
   flex-wrap: wrap;
   border-radius: 8px;
@@ -89,14 +89,14 @@ select {
 
 .section-heading input:active {
   outline: none;
-  background-color: #1d2d25 !important;
-  color: limegreen !important;
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
   cursor: pointer;
 }
 
 .section-heading input:hover {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: var(--background-color);
+  color: var(--text-color);
   cursor: pointer;
 }
 
@@ -105,9 +105,9 @@ label input {
 }
 
 a:hover {
-  color: #2ecc71;
+  color: var(--secondary-color);
 }
 
 .active {
-  color: #2ecc71;
+  color: var(--secondary-color);
 }
