@@ -16,7 +16,8 @@ class Recipe {
             <img src="${this.picture}" alt="PICTURE" class="recipe-image">
             <p class="title">${this.name}</p>
             <p>Ingredients: ${groceryItemsHtml}</p>
-            <p>Description: ${this.desc}</p>`;
+            <p>Description: ${this.desc}</p>
+            <p>Instructions: ${this.instructions}</p>`;
   }
 
   getClickableHtmlDisplay() {
