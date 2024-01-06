@@ -4,11 +4,11 @@ fieldset {
   flex-direction: column;
 }
 
-fieldset input,
+/*fieldset input,
 fieldset textarea,
 fieldset select {
   margin-right: 0.5rem !important;
-}
+}*/
 
 form input,
 textarea,
@@ -36,7 +36,7 @@ select {
   color: var(--text-color);
 }
 
-#grocery-amounts {
+/*#grocery-amounts {
   border: 1px solid var(--text-color);
   background-color: #0c4d17;
   flex-wrap: wrap;
@@ -44,7 +44,7 @@ select {
   height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
-}
+}*/
 
 .section-heading input:active {
   outline: none;
@@ -104,7 +104,7 @@ label input {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 2;
-  width: 400px;
+  width: 450px;
 
   /* ogranici visinu ako je kartica preduga */
   max-height: 80vh;
@@ -132,4 +132,21 @@ label input {
 #close-icon:hover {
   cursor: pointer;
   background-color: var(--secondary-color);
+}
+
+.row {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-around;
+}
+
+label,
+select,
+input {
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
 }
