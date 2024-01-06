@@ -23,13 +23,7 @@ function initAddGroceryButton() {
       return;
     }
 
-    var grocery = new Grocery(
-      -1,
-      name,
-      carbs,
-      image
-    );
-    //db.addGrocery(grocery);
+    var grocery = new Grocery(-1, name, carbs, image);
 
     const body = {
       grocery: grocery,
@@ -55,14 +49,6 @@ function initAddRecipeButton() {
     var selectedItems = document.querySelectorAll(
       "#recipe-groceries-list option:checked"
     );
-
-    //selectedItems.forEach((item) => {
-    //groceryItems.push(item.text);
-    /*var id = parseInt(item.value.split("-")[0]);
-      if (db.groceryItems.includes(id)) {
-        groceryItems.push(id);
-      }*/
-    //});
 
     var recipe = new Recipe(
       -1,
