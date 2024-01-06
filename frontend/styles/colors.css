@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #2c4237; /*#1d2d25;*/
-  --secondary-color: #31b769; /*limegreen*/
+  --primary-color: #2c4237; /*instead of #1d2d25 so that it is better distinguished from dark background*/
+  --secondary-color: #31b769; /*instead of limegreen so that white text is seen better*/
   --text-color: #ffffff;
   --background-color: #1a1a1a;
 }

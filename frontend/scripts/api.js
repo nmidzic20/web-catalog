@@ -6,56 +6,50 @@ var baseApiUrl = baseUrl + "/api";
 var apiRecipes = baseApiUrl + "/recipes";
 var apiGroceries = baseApiUrl + "/groceries";
 
-function fetchRecipes() {
-  return fetch(apiRecipes)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data.recipes.map(
-        (recipeData) =>
-          new Recipe(
-            recipeData.id,
-            recipeData.name,
-            recipeData.picture,
-            recipeData.groceryItems,
-            recipeData.description,
-            recipeData.instructions
-          )
-      );
-    })
-    .catch((error) => {
-      console.error("Error fetching recipes:", error);
-      return [];
-    });
+async function fetchRecipes() {
+  try {
+    const response = await fetch(apiRecipes);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.recipes.map(
+      (recipeData) =>
+        new Recipe(
+          recipeData.id,
+          recipeData.name,
+          recipeData.picture,
+          recipeData.groceryItems,
+          recipeData.description,
+          recipeData.instructions
+        )
+    );
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    return [];
+  }
 }
 
-function fetchGroceries() {
-  return fetch(apiGroceries)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data.groceries.map(
-        (groceryData) =>
-          new Grocery(
-            groceryData.id,
-            groceryData.name,
-            groceryData.carbs,
-            groceryData.picture
-          )
-      );
-    })
-    .catch((error) => {
-      console.error("Error fetching groceries:", error);
-      return [];
-    });
+async function fetchGroceries() {
+  try {
+    const response = await fetch(apiGroceries);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.groceries.map(
+      (groceryData) =>
+        new Grocery(
+          groceryData.id,
+          groceryData.name,
+          groceryData.carbs,
+          groceryData.picture
+        )
+    );
+  } catch (error) {
+    console.error("Error fetching groceries:", error);
+    return [];
+  }
 }
 
 function postRecipe(jsonBody) {
