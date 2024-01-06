@@ -1,11 +1,3 @@
-function isValidNumber(value) {
-  return /^\d+(\.\d+)?$/.test(value);
-}
-
-function isEmptyField(value) {
-  return value.length === 0;
-}
-
 function initAddGroceryButton() {
   initShowGroceryFormButton();
   const addGroceryButton = document.getElementById("add-grocery");
@@ -15,21 +7,15 @@ function initAddGroceryButton() {
     let image = document.getElementById("grocery-image").value;
 
     if (isEmptyField(name) || isEmptyField(image)) {
-      alert("Please fill in all fields before adding a grocery.");
+      openCustomAlert("Please fill in all fields before adding a grocery.");
       return;
     }
     if (!isValidNumber(carbs)) {
-      alert("Please enter a valid number for grocery carbs.");
+      openCustomAlert("Please enter a valid number for grocery carbs.");
       return;
     }
 
-    var grocery = new Grocery(
-      -1,
-      name,
-      carbs,
-      image
-    );
-    //db.addGrocery(grocery);
+    var grocery = new Grocery(-1, name, carbs, image);
 
     const body = {
       grocery: grocery,
@@ -37,6 +23,7 @@ function initAddGroceryButton() {
     const jsonBody = JSON.stringify(body);
 
     postGrocery(jsonBody);
+    closeForm("grocery-form");
   });
 }
 
@@ -51,26 +38,40 @@ function initAddRecipeButton() {
   initShowRecipeFormButton();
   const addRecipeButton = document.getElementById("add-recipe");
   addRecipeButton.addEventListener("click", () => {
+    let name = document.getElementById("recipe-name").value;
+    let image = document.getElementById("recipe-image").value;
+    let description = document.getElementById("recipe-description").value;
+    let instructions = document.getElementById("recipe-instructions").value;
+
+    if (
+      isEmptyField(name) ||
+      isEmptyField(image) ||
+      isEmptyField(description) ||
+      isEmptyField(instructions)
+    ) {
+      openCustomAlert("Please fill in all fields before adding a recipe.");
+      return;
+    }
+
+    if (!areGroceryAmountsValid()) {
+      openCustomAlert(
+        "Grocery amounts cannot be zero or less, and must be integer numbers"
+      );
+      return;
+    }
+
     var groceryItems = [];
     var selectedItems = document.querySelectorAll(
       "#recipe-groceries-list option:checked"
     );
 
-    //selectedItems.forEach((item) => {
-    //groceryItems.push(item.text);
-    /*var id = parseInt(item.value.split("-")[0]);
-      if (db.groceryItems.includes(id)) {
-        groceryItems.push(id);
-      }*/
-    //});
-
     var recipe = new Recipe(
       -1,
-      document.getElementById("recipe-name").value,
-      document.getElementById("recipe-image").value,
-      [],
-      document.getElementById("recipe-description").value,
-      document.getElementById("recipe-instructions").value
+      name,
+      image,
+      groceryItems,
+      description,
+      instructions
     );
 
     var ingredients = [];
@@ -78,7 +79,7 @@ function initAddRecipeButton() {
 
     // Access all grocery amounts
     const groceryAmountCollection =
-      document.getElementById("grocery-amounts").children;
+      document.getElementsByClassName("grocery-amounts");
     console.log(groceryAmountCollection);
     for (let item of groceryAmountCollection) {
       if (!item.value) item.value = 0;
@@ -119,6 +120,7 @@ function initAddRecipeButton() {
     console.log(body);
 
     postRecipe(jsonBody);
+    closeForm("recipe-form");
   });
 }
 

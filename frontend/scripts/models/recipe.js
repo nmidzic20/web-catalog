@@ -13,10 +13,11 @@ class Recipe {
       .map((grocery) => grocery)
       .join(", ");
     return `
-            <img src="${this.picture}" alt="PICTURE" class="recipe-image">
-            <p>${this.name}</p>
-            <p>Ingredients: ${groceryItemsHtml}</p>
-            <p>Description: ${this.desc}</p>`;
+      <img src="${this.picture}" alt="PICTURE" class="recipe-image">
+      <p class="title">${this.name}</p>
+      <p>Ingredients: ${groceryItemsHtml}</p>
+      <p>Description: ${this.desc}</p>
+      <p>Instructions: ${this.instructions}</p>`;
   }
 
   getClickableHtmlDisplay() {

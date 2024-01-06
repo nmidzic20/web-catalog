@@ -176,7 +176,7 @@ def main():
             
     server_socket.listen()
 
-    print(f"Server is listening on IP address and port: {SERVER_HOST}:{server_port}")
+    print(f"Server is listening on IP address and port: http://localhost:{server_port}")
 
     while True:
         try:
