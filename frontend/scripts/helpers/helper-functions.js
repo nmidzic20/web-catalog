@@ -43,6 +43,15 @@ function isEmptyField(value) {
   return value.length === 0;
 }
 
+function areGroceryAmountsValid() {
+  let groceryAmounts = document.querySelectorAll(".grocery-amounts");
+  let isValid = Array.from(groceryAmounts).every((amount) => {
+    const floatValue = parseFloat(amount.value);
+    return floatValue > 0 && Number.isInteger(floatValue);
+  });
+  return isValid;
+}
+
 function openCustomAlert(message) {
   var modalText = document.getElementById("modal-text");
   modalText.innerHTML = message;
@@ -61,16 +70,6 @@ function removeRow(button) {
   const rowToRemove = button.parentElement;
   rowToRemove.remove();
 }
-/*
-function displayDeleteButtonForGroceries() {
-  let rows = document.querySelectorAll(".row");
-  let deleteButton = rows[0].querySelector("#remove-row");
-  if (deleteButton) deleteButton.remove();
-  for (let i = 0; i < rows.length; i++) {
-    let trashButton = rows[i].querySelector("#remove-row");
-    if (trashButton) trashButton.style.display = "";
-  }
-}*/
 
 function setGroceryAmountInputId(row) {
   let selectedOption = row.querySelector("select option:checked");

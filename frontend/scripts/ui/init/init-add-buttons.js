@@ -53,6 +53,13 @@ function initAddRecipeButton() {
       return;
     }
 
+    if (!areGroceryAmountsValid()) {
+      openCustomAlert(
+        "Grocery amounts cannot be zero or less, and must be integer numbers"
+      );
+      return;
+    }
+
     var groceryItems = [];
     var selectedItems = document.querySelectorAll(
       "#recipe-groceries-list option:checked"
