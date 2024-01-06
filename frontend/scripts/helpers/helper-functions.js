@@ -56,3 +56,18 @@ function closeCustomAlert() {
 function closeForm(id) {
   changeVisibility(id);
 }
+
+function removeRow(button) {
+  const rowToRemove = button.parentElement;
+  rowToRemove.remove();
+}
+/*
+function displayDeleteButtonForGroceries() {
+  let rows = document.querySelectorAll(".row");
+  let deleteButton = rows[0].querySelector("#remove-row");
+  if (deleteButton) deleteButton.remove();
+  for (let i = 0; i < rows.length; i++) {
+    let trashButton = rows[i].querySelector("#remove-row");
+    if (trashButton) trashButton.style.display = "";
+  }
+}*/

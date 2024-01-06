@@ -20,8 +20,11 @@ function loadAddRecipeForm() {
                   <select id="recipe-groceries-list" name="recipe-groceries-list">
                   </select>
                   <input type="number" id="grocery-amounts" name="grocery-amounts" min="1" value="1">
+                  <button id="remove-row" onclick="removeRow(this)" style="margin:10px;">
+                    <i class="fas fa-trash-alt"></i> 
+                  </button>
                 </div>
-                <button id="addRow">+</button>
+                <button id="addRow">Add grocery</button>
               </fieldset>
 
             </fieldset>
@@ -58,13 +61,14 @@ function initGroceryListForRecipeForm() {
       const selectInput = document.getElementById("recipe-groceries-list");
       selectInput.innerHTML = options.join("");
 
+      let originalRows = document.querySelectorAll(".row");
+
       document
         .getElementById("addRow")
         .addEventListener("click", function (event) {
           event.preventDefault(); // prevent unwanted focusing in form default behaviour
 
-          let originalRow = document.querySelectorAll(".row");
-          let newRow = originalRow[1].cloneNode(true);
+          let newRow = originalRows[1].cloneNode(true);
 
           newRow.querySelector("input").value = 1;
 
@@ -85,7 +89,6 @@ function initGroceryListForRecipeForm() {
           else if (optionsLeft == 1)
             document.getElementById("addRow").style.display = "none";
 
-          this.parentNode.insertBefore(newRow1, this);
           this.parentNode.insertBefore(newRow, this);
         });
     });
