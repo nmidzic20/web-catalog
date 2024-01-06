@@ -1,100 +1,113 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 html {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    scroll-behavior: smooth;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  scroll-behavior: smooth;
 }
-        
+
 header {
-    background-color: #1d2d25;
-    padding: 20px;
-    text-align: center;
+  background-color: #1d2d25;
+  padding: 20px;
+  text-align: center;
 }
 
 body {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
 }
-        
+
 footer {
-    margin-top: 2rem;
-    background-color: #1d2d25;
-    padding: 10px;
-    text-align: center;
+  margin-top: 2rem;
+  background-color: #1d2d25;
+  padding: 10px;
+  text-align: center;
 }
 
 a {
-    color: #ffffff;
-    text-decoration: none;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 fieldset {
-    border: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-fieldset input, fieldset textarea, fieldset select {
-    margin-right: 0.5rem !important;
+fieldset input,
+fieldset textarea,
+fieldset select {
+  margin-right: 0.5rem !important;
 }
 
-form input, textarea, select {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 1rem 0;
-    padding: 0.5rem;
-    width: 10rem;
-    border-radius: 8px;
-    background-color: #1d2d25;
-    color: #ffffff;
+form input,
+textarea,
+select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  width: 10rem;
+  border-radius: 8px;
+  background-color: #1d2d25;
+  color: #ffffff;
 }
 
 #grocery-amounts input {
-    margin-left: 0;
-    margin-right: 0;
-    width: 100px;
-    padding: 0.5rem 1rem;
-    margin: 0;
-    border-radius: 8px;
-    background-color: #1d2d25;
-    color: #ffffff;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100px;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  border-radius: 8px;
+  background-color: #1d2d25;
+  color: #ffffff;
 }
 
 #grocery-amounts {
-    border: 1px solid white;
-    background-color: #0c4d17;
-    flex-wrap: wrap;
-    border-radius: 8px;
-    height: 200px;
-    overflow-y: auto;
-    overflow-x: hidden;
+  border: 1px solid white;
+  background-color: #0c4d17;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .section-heading input:active {
-    outline: none;
-    background-color: #1d2d25 !important;
-    color: limegreen !important;
-    cursor: pointer;
+  outline: none;
+  background-color: #1d2d25 !important;
+  color: limegreen !important;
+  cursor: pointer;
 }
 
 .section-heading input:hover {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    cursor: pointer;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 label input {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+a:hover {
+  color: #2ecc71;
+}
+
+.active {
+  color: #2ecc71;
 }
