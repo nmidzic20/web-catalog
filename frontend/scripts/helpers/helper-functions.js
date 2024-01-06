@@ -34,3 +34,11 @@ function setActiveLink() {
     setActive(document.querySelector('a[href="/groceries"]'));
   }
 }
+
+function isValidNumber(value) {
+  return /^\d+(\.\d+)?$/.test(value);
+}
+
+function isEmptyField(value) {
+  return value.length === 0;
+}

@@ -1,11 +1,3 @@
-function isValidNumber(value) {
-  return /^\d+(\.\d+)?$/.test(value);
-}
-
-function isEmptyField(value) {
-  return value.length === 0;
-}
-
 function initAddGroceryButton() {
   initShowGroceryFormButton();
   const addGroceryButton = document.getElementById("add-grocery");
@@ -45,6 +37,16 @@ function initAddRecipeButton() {
   initShowRecipeFormButton();
   const addRecipeButton = document.getElementById("add-recipe");
   addRecipeButton.addEventListener("click", () => {
+    let name = document.getElementById("recipe-name").value;
+    let image = document.getElementById("recipe-image").value;
+    let description = document.getElementById("recipe-description").value;
+    let instructions = document.getElementById("recipe-instructions").value;
+
+    if (isEmptyField(name) || isEmptyField(image)) {
+      alert("Please fill in all fields before adding a recipe.");
+      return;
+    }
+
     var groceryItems = [];
     var selectedItems = document.querySelectorAll(
       "#recipe-groceries-list option:checked"
@@ -52,11 +54,11 @@ function initAddRecipeButton() {
 
     var recipe = new Recipe(
       -1,
-      document.getElementById("recipe-name").value,
-      document.getElementById("recipe-image").value,
-      [],
-      document.getElementById("recipe-description").value,
-      document.getElementById("recipe-instructions").value
+      name,
+      image,
+      groceryItems,
+      description,
+      instructions
     );
 
     var ingredients = [];
