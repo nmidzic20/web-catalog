@@ -22,7 +22,7 @@ function loadAddRecipeForm() {
               <fieldset>
                 <label for="recipe-description">Description:</label>
                 <textarea id="recipe-description" name="recipe-description" required></textarea>
-                <label for="recipe-instructions">Tutorial:</label>
+                <label for="recipe-instructions">Instructions:</label>
                 <textarea id="recipe-instructions" name="recipe-instructions" required></textarea>
               </fieldset>
               <input type="button" value="Add new recipe" id="add-recipe">

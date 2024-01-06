@@ -42,3 +42,17 @@ function isValidNumber(value) {
 function isEmptyField(value) {
   return value.length === 0;
 }
+
+function openCustomAlert(message) {
+  var modalText = document.getElementById("modal-text");
+  modalText.innerHTML = message;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeCustomAlert() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function closeForm(id) {
+  changeVisibility(id);
+}

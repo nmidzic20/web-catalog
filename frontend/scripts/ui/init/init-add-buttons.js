@@ -7,11 +7,11 @@ function initAddGroceryButton() {
     let image = document.getElementById("grocery-image").value;
 
     if (isEmptyField(name) || isEmptyField(image)) {
-      alert("Please fill in all fields before adding a grocery.");
+      openCustomAlert("Please fill in all fields before adding a grocery.");
       return;
     }
     if (!isValidNumber(carbs)) {
-      alert("Please enter a valid number for grocery carbs.");
+      openCustomAlert("Please enter a valid number for grocery carbs.");
       return;
     }
 
@@ -23,6 +23,7 @@ function initAddGroceryButton() {
     const jsonBody = JSON.stringify(body);
 
     postGrocery(jsonBody);
+    closeForm("grocery-form");
   });
 }
 
@@ -42,8 +43,13 @@ function initAddRecipeButton() {
     let description = document.getElementById("recipe-description").value;
     let instructions = document.getElementById("recipe-instructions").value;
 
-    if (isEmptyField(name) || isEmptyField(image)) {
-      alert("Please fill in all fields before adding a recipe.");
+    if (
+      isEmptyField(name) ||
+      isEmptyField(image) ||
+      isEmptyField(description) ||
+      isEmptyField(instructions)
+    ) {
+      openCustomAlert("Please fill in all fields before adding a recipe.");
       return;
     }
 
@@ -107,6 +113,7 @@ function initAddRecipeButton() {
     console.log(body);
 
     postRecipe(jsonBody);
+    closeForm("recipe-form");
   });
 }
 
@@ -115,8 +122,4 @@ function initShowRecipeFormButton() {
   showRecipeFormButton.addEventListener("click", () => {
     changeVisibility("recipe-form");
   });
-}
-
-function closeForm(id) {
-  changeVisibility(id);
 }
