@@ -39,70 +39,7 @@ a {
   display: none;
 }
 
-fieldset {
-  border: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-fieldset input,
-fieldset textarea,
-fieldset select {
-  margin-right: 0.5rem !important;
-}
-
-form input,
-textarea,
-select {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  width: 10rem;
-  border-radius: 8px;
-  background-color: var(--primary-color);
-  color: var(--text-color);
-}
-
-#grocery-amounts input {
-  margin-left: 0;
-  margin-right: 0;
-  width: 100px;
-  padding: 0.5rem 1rem;
-  margin: 0;
-  border-radius: 8px;
-  background-color: var(--primary-color);
-  color: var(--text-color);
-}
-
-#grocery-amounts {
-  border: 1px solid var(--text-color);
-  background-color: #0c4d17;
-  flex-wrap: wrap;
-  border-radius: 8px;
-  height: 200px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.section-heading input:active {
-  outline: none;
-  background-color: var(--primary-color) !important;
-  color: var(--secondary-color) !important;
-  cursor: pointer;
-}
-
-.section-heading input:hover {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  cursor: pointer;
-}
-
-label input {
-  margin-right: 0.5rem;
-}
+/* Nav links */
 
 a:hover {
   color: var(--secondary-color);

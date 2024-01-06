@@ -20,6 +20,10 @@
   padding-bottom: 10px;
 }
 
+.grocery-details:hover {
+  background-color: var(--secondary-color);
+}
+
 .grocery-details p {
   margin-top: 10px;
   font-size: 16px;
