@@ -54,5 +54,9 @@ class RecipeHandler():
                 VALUES('{recipe.name}', '{recipe.desc}', '{recipe.picture}', '{recipe.instructions}');
             """
             db.execute_run_query(query)
+
+            query = "SELECT last_insert_rowid()"
+            last_id = db.execute_query(query)[0][0]
+            return last_id
         finally:
             db.close_connection()

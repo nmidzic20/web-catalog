@@ -8,6 +8,8 @@ import sys
 sys.path.insert(1, '..')
 
 import backend.recipes as recipes
+import backend.groceries as groceries
+import backend.ingredients as ingredients
 
 FRONTEND_DIR = "../frontend"
 
@@ -39,7 +41,7 @@ def request_handler(request):
                     del data['recipe']['groceryItems']
 
                 newRecipe = recipes.Recipe(**data['recipe'])
-                recipes.RecipeHandler().create_recipe(newRecipe)
+                newRecipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
 
                 ingredientArray = data['ingredients']
                 print(ingredientArray)
@@ -49,12 +51,14 @@ def request_handler(request):
                     print(ingredient['grocery']['carbs'])
                     print(ingredient['grocery']['image'])
                     print(ingredient['amount'])
-                    #ingredients.IngredientHandler().create_ingredient(newRecipe.id, ingredient['grocery']['id'], ingredient['amount'] )
+                    ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
-                print(data['grocery'])
-                # newGrocery = groceries.Grocery(**data['grocery'])
-                # groceries.GroceryHandler().create_grocery(newGrocery)
+                if "id" in data['grocery']:
+                    del data['grocery']['id']
+
+                newGrocery = groceries.Grocery(**data['grocery'])
+                groceries.GroceryHandler().create_grocery(newGrocery)
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
@@ -75,7 +79,13 @@ def request_handler(request):
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
-            return "HTTP/1.1 200 OK\n\nThis is the groceries API endpoint\n"
+            result = groceries.GroceryHandler().get_all_groceries()
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
+
+            response_json = json.dumps({"groceries": list_of_dicts})
+            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+
+            return response_headers + response_json
 
         try:
 

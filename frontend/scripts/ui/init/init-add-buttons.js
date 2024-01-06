@@ -1,12 +1,33 @@
+function isValidNumber(value) {
+  return /^\d+(\.\d+)?$/.test(value);
+}
+
+function isEmptyField(value) {
+  return value.length === 0;
+}
+
 function initAddGroceryButton() {
   initShowGroceryFormButton();
   const addGroceryButton = document.getElementById("add-grocery");
   addGroceryButton.addEventListener("click", () => {
+    let name = document.getElementById("grocery-name").value;
+    let carbs = document.getElementById("grocery-carbs").value;
+    let image = document.getElementById("grocery-image").value;
+
+    if (isEmptyField(name) || isEmptyField(image)) {
+      alert("Please fill in all fields before adding a grocery.");
+      return;
+    }
+    if (!isValidNumber(carbs)) {
+      alert("Please enter a valid number for grocery carbs.");
+      return;
+    }
+
     var grocery = new Grocery(
       -1,
-      document.getElementById("grocery-name").value,
-      document.getElementById("grocery-carbs").value,
-      document.getElementById("grocery-image").value
+      name,
+      carbs,
+      image
     );
     //db.addGrocery(grocery);
 
@@ -15,7 +36,7 @@ function initAddGroceryButton() {
     };
     const jsonBody = JSON.stringify(body);
 
-    postGroceries(jsonBody);
+    postGrocery(jsonBody);
   });
 }
 

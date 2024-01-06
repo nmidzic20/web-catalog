@@ -48,7 +48,7 @@ function fetchGroceries() {
             groceryData.id,
             groceryData.name,
             groceryData.carbs,
-            groceryData.image
+            groceryData.picture
           )
       );
     })
@@ -87,6 +87,7 @@ function postGrocery(jsonBody) {
     .then((response) => response.text())
     .then((data) => {
       console.log("Response from server:", data);
+      insertGroceriesIntoGrid();
     })
     .catch((error) => {
       console.error("Error:", error);

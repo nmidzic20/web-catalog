@@ -28,5 +28,4 @@ function insertGroceriesIntoGrid() {
   });
 }
 
-// pozvati kad je implementiran endpoint na backendu
-// insertGroceriesIntoGrid();
+insertGroceriesIntoGrid();
