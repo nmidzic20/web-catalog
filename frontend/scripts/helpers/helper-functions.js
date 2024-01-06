@@ -30,9 +30,7 @@ function setActiveLink() {
 
   if (currentUrl.includes("recipes")) {
     setActive(document.querySelector('a[href="/recipes"]'));
-  }
-
-  if (currentUrl.includes("groceries")) {
+  } else {
     setActive(document.querySelector('a[href="/groceries"]'));
   }
 }
