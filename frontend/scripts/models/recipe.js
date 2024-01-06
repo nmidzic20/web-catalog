@@ -14,7 +14,7 @@ class Recipe {
       .join(", ");
     return `
             <img src="${this.picture}" alt="PICTURE" class="recipe-image">
-            <p>${this.name}</p>
+            <p class="title">${this.name}</p>
             <p>Ingredients: ${groceryItemsHtml}</p>
             <p>Description: ${this.desc}</p>`;
   }
