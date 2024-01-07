@@ -12,6 +12,7 @@ import backend.groceries as groceries
 import backend.ingredients as ingredients
 
 FRONTEND_DIR = "../frontend"
+IMAGE_DIR = "../images"
 
 def request_handler(request):
 
@@ -79,6 +80,18 @@ def request_handler(request):
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
+
+        elif "/api/images/" in requested_path:
+            mime_type, _ = mimetypes.guess_type(requested_path)
+
+            try:
+                image = open(IMAGE_DIR + requested_path.split("api/images")[1], "rb")
+                image_content = image.read()
+                image.close()
+                return (f"HTTP/1.1 200 OK\r\nContent-Type: {mime_type}\r\nAccept-Ranges: bytes\r\n\r\n", image_content)
+                
+            except FileNotFoundError:
+                return f"HTTP/1.1 404 OK\r\nContent-Type: {mime_type}\r\n\r\nImage not found"
             result = groceries.GroceryHandler().get_all_groceries()
             list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
 
@@ -131,7 +144,12 @@ def request_handler(request):
 def process_request(request, client_socket):
     try:
         response = request_handler(request)
-        client_socket.sendall(response.encode())  # mozda ce olaksati slanje slika
+
+        if isinstance(response, tuple):
+            client_socket.send(response[0].encode())
+            client_socket.send(response[1])
+        else:
+            client_socket.sendall(response.encode())  # mozda ce olaksati slanje slika
     except Exception as exc:
         print(exc)
     finally:
