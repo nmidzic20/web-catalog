@@ -2,33 +2,28 @@ function initAddGroceryButton() {
   initShowGroceryFormButton();
   const addGroceryButton = document.getElementById("add-grocery");
   addGroceryButton.addEventListener("click", () => {
-    var grocery = new Grocery(
-      -1,
-      document.getElementById("grocery-name").value,
-      document.getElementById("grocery-carbs").value,
-      document.getElementById("grocery-image").value
-    );
-    db.addGrocery(grocery);
+    let name = document.getElementById("grocery-name").value;
+    let carbs = document.getElementById("grocery-carbs").value;
+    let image = document.getElementById("grocery-image").value;
+
+    if (isEmptyField(name) || isEmptyField(image)) {
+      openCustomAlert("Please fill in all fields before adding a grocery.");
+      return;
+    }
+    if (!isValidNumber(carbs)) {
+      openCustomAlert("Please enter a valid number for grocery carbs.");
+      return;
+    }
+
+    var grocery = new Grocery(-1, name, carbs, image);
 
     const body = {
       grocery: grocery,
     };
     const jsonBody = JSON.stringify(body);
 
-    fetch(urlGroceries, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Response from server:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    postGrocery(jsonBody);
+    closeForm("grocery-form");
   });
 }
 
@@ -43,48 +38,89 @@ function initAddRecipeButton() {
   initShowRecipeFormButton();
   const addRecipeButton = document.getElementById("add-recipe");
   addRecipeButton.addEventListener("click", () => {
+    let name = document.getElementById("recipe-name").value;
+    let image = document.getElementById("recipe-image").value;
+    let description = document.getElementById("recipe-description").value;
+    let instructions = document.getElementById("recipe-instructions").value;
+
+    if (
+      isEmptyField(name) ||
+      isEmptyField(image) ||
+      isEmptyField(description) ||
+      isEmptyField(instructions)
+    ) {
+      openCustomAlert("Please fill in all fields before adding a recipe.");
+      return;
+    }
+
+    if (!areGroceryAmountsValid()) {
+      openCustomAlert(
+        "Grocery amounts cannot be zero or less, and must be integer numbers"
+      );
+      return;
+    }
+
     var groceryItems = [];
     var selectedItems = document.querySelectorAll(
       "#recipe-groceries-list option:checked"
     );
 
-    selectedItems.forEach((item) => {
-      var id = parseInt(item.value.split("-")[0]);
-      if (db.groceryItems.includes(id)) {
-        groceryItems.push(id);
-      }
-    });
-
     var recipe = new Recipe(
       -1,
-      document.getElementById("recipe-name").value,
-      document.getElementById("recipe-image").value,
+      name,
+      image,
       groceryItems,
-      document.getElementById("recipe-description").value,
-      document.getElementById("recipe-instructions").value
+      description,
+      instructions
     );
-    db.addRecipe(recipe);
+
+    var ingredients = [];
+    var groceryAmounts = {};
+
+    // Access all grocery amounts
+    const groceryAmountCollection =
+      document.getElementsByClassName("grocery-amounts");
+    console.log(groceryAmountCollection);
+    for (let item of groceryAmountCollection) {
+      if (!item.value) item.value = 0;
+      console.log(item.id);
+      console.log(item.value);
+
+      const number = item.id.match(/\d+/);
+      const extractedNumber = parseInt(number[0]);
+      console.log(extractedNumber);
+
+      groceryAmounts[extractedNumber] = item.value;
+    }
+
+    selectedItems.forEach((item) => {
+      var match = item.text.match(/(.+) \(carbs: (\d+)(?:g)?\)/);
+      if (match) {
+        let id = item.value;
+        let name = match[1];
+        let carbs = parseInt(match[2]);
+        let image = "";
+        console.log(groceryAmounts);
+        console.log(groceryAmounts[id]);
+        ingredients.push(
+          new Ingredient(
+            new Grocery(id, name, carbs, image),
+            groceryAmounts[id]
+          )
+        );
+      } else ingredients.push({});
+    });
 
     const body = {
       recipe: recipe,
+      ingredients: ingredients,
     };
     const jsonBody = JSON.stringify(body);
 
-    fetch(urlRecipes, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Response from server:", data);
-        insertRecipesIntoGrid();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    console.log(body);
+
+    postRecipe(jsonBody);
+    closeForm("recipe-form");
   });
 }
 

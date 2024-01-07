@@ -8,6 +8,8 @@ import sys
 sys.path.insert(1, '..')
 
 import backend.recipes as recipes
+import backend.groceries as groceries
+import backend.ingredients as ingredients
 
 FRONTEND_DIR = "../frontend"
 IMAGE_DIR = "../images"
@@ -31,19 +33,33 @@ def request_handler(request):
             print("POST request received")
             data = json.loads(dataJson)
 
-            # pozvati funkciju za obradu iz odgovarajuce skripte
             if requested_path == "/recipes":
+                # obrisati da ne stvara problem kod inicijalizacije Recipea
                 if "id" in data['recipe']:
                     del data['recipe']['id']
 
-                # ove 2 linije ispod maknuti nakon što se implementira slanje groceryItems s frontenda
-                # kada se to implementira, onda se može ovdje handlati insert u Ingredient tablicu
                 if "groceryItems" in data['recipe']:
                     del data['recipe']['groceryItems']
 
-                recipes.RecipeHandler().create_recipe(recipes.Recipe(**data['recipe']))
+                newRecipe = recipes.Recipe(**data['recipe'])
+                newRecipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
+
+                ingredientArray = data['ingredients']
+                print(ingredientArray)
+                for ingredient in ingredientArray:
+                    print(ingredient['grocery']['id'])
+                    print(ingredient['grocery']['name'])
+                    print(ingredient['grocery']['carbs'])
+                    print(ingredient['grocery']['image'])
+                    print(ingredient['amount'])
+                    ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
+                  
             elif requested_path == "/groceries":
-                print(data['grocery'])
+                if "id" in data['grocery']:
+                    del data['grocery']['id']
+
+                newGrocery = groceries.Grocery(**data['grocery'])
+                groceries.GroceryHandler().create_grocery(newGrocery)
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
@@ -64,7 +80,7 @@ def request_handler(request):
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
-            return "HTTP/1.1 200 OK\n\nThis is the groceries API endpoint\n"
+
         elif "/api/images/" in requested_path:
             mime_type, _ = mimetypes.guess_type(requested_path)
 
@@ -76,6 +92,13 @@ def request_handler(request):
                 
             except FileNotFoundError:
                 return f"HTTP/1.1 404 OK\r\nContent-Type: {mime_type}\r\n\r\nImage not found"
+            result = groceries.GroceryHandler().get_all_groceries()
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
+
+            response_json = json.dumps({"groceries": list_of_dicts})
+            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+
+            return response_headers + response_json
 
         try:
 
@@ -152,8 +175,6 @@ def main():
     SERVER_HOST = "127.0.0.1"
     server_port = 8000
 
-    recipes.RecipeHandler().get_ingredients_for_recipe(1)
-
     connection_exception = ""
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -173,7 +194,7 @@ def main():
             
     server_socket.listen()
 
-    print(f"Server is listening on IP address and port: {SERVER_HOST}:{server_port}")
+    print(f"Server is listening on IP address and port: http://localhost:{server_port}")
 
     while True:
         try:

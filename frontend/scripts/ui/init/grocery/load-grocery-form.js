@@ -1,7 +1,10 @@
 function loadAddGroceryForm() {
-    const groceriesHeading = document.getElementById("groceries-heading");
-    groceriesHeading.outerHTML += `
-        <form id="grocery-form" class="hidden">
+  const groceriesHeading = document.getElementById("groceries-heading");
+  groceriesHeading.outerHTML += `
+    <div class="overlay hidden" id="grocery-form">
+    <div id="form-card">
+        <span id="close-icon" onclick="closeForm('grocery-form')">&times;</span>
+        <form>
             <fieldset>
                 <label for="grocery-name">Grocery Name:</label>
                 <input type="text" id="grocery-name" name="grocery-name" required>
@@ -11,5 +14,7 @@ function loadAddGroceryForm() {
                 <input type="text" id="grocery-image" name="grocery-image">
                 <input type="button" value="Add new grocery" id="add-grocery">
             </fieldset>
-        </form>`;
+        </form>
+    </div>
+    </div>`;
 }
