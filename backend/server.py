@@ -80,7 +80,13 @@ def request_handler(request):
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
+            result = groceries.GroceryHandler().get_all_groceries()
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
 
+            response_json = json.dumps({"groceries": list_of_dicts})
+            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+
+            return response_headers + response_json
         elif "/api/images/" in requested_path:
             mime_type, _ = mimetypes.guess_type(requested_path)
 
@@ -92,14 +98,6 @@ def request_handler(request):
                 
             except FileNotFoundError:
                 return f"HTTP/1.1 404 OK\r\nContent-Type: {mime_type}\r\n\r\nImage not found"
-            result = groceries.GroceryHandler().get_all_groceries()
-            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
-
-            response_json = json.dumps({"groceries": list_of_dicts})
-            response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
-
-            return response_headers + response_json
-
         try:
 
             index = open(FRONTEND_DIR + "/index.html")
