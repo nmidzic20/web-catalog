@@ -13,7 +13,6 @@ class DB:
     def connect_to_database(self):
         try:
             self.conn = sqlite3.connect(self.db_path)
-            print('Connected to database.')
         except sqlite3.Error as e:
             print(f'Error connecting to the database: {e}')
 
@@ -26,7 +25,6 @@ class DB:
                 cursor.execute(sql)
             
             result = cursor.fetchall()
-            print(f'Executed query: {sql}')
             return result
 
         except sqlite3.Error as e:
@@ -42,7 +40,6 @@ class DB:
                 cursor.execute(sql)
 
             self.conn.commit()
-            print(f'Executed run query: {sql}')
 
         except sqlite3.Error as e:
             self.conn.rollback()
@@ -51,7 +48,6 @@ class DB:
     def close_connection(self):
         if self.conn:
             self.conn.close()
-            print('Connection closed.')
 
     @classmethod
     def get_instance(cls, db_path):
@@ -64,7 +60,6 @@ if __name__ == "__main__":
     db.connect_to_database()
 
     query_result = db.execute_query("SELECT * FROM Grocery")
-    print(query_result)
 
     #db.execute_run_query("INSERT INTO Grocery (name, carbs) VALUES (?, ?)", ('Beef', 200))
 

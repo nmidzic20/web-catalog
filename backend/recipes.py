@@ -22,7 +22,6 @@ class RecipeHandler():
 
         try:
             query_result = db.execute_query("SELECT * FROM Recipe")
-            print(query_result)
             return query_result
         finally:
             db.close_connection()
@@ -38,8 +37,7 @@ class RecipeHandler():
                 JOIN Grocery ON Ingredient.grocery_id = Grocery.id
                 WHERE Ingredient.recipe_id = ?
             """
-            query_result = db.execute_query(query, (recipeId,))            
-            print(query_result)
+            query_result = db.execute_query(query, (recipeId,))
             return query_result
         finally:
             db.close_connection()

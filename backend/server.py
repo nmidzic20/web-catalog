@@ -30,7 +30,6 @@ def request_handler(request):
             body = headers[-1]
             dataJson = body[:content_length]
 
-            print("POST request received")
             data = json.loads(dataJson)
 
             if requested_path == "/recipes":
@@ -45,13 +44,7 @@ def request_handler(request):
                 newRecipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
 
                 ingredientArray = data['ingredients']
-                print(ingredientArray)
                 for ingredient in ingredientArray:
-                    print(ingredient['grocery']['id'])
-                    print(ingredient['grocery']['name'])
-                    print(ingredient['grocery']['carbs'])
-                    print(ingredient['grocery']['image'])
-                    print(ingredient['amount'])
                     ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
@@ -112,8 +105,6 @@ def request_handler(request):
                 requested_path += ".html"
 
             mime_type, _ = mimetypes.guess_type(requested_path)
-            print(requested_path)
-            print(mime_type)
 
             file = open(FRONTEND_DIR + requested_path)
             file_content = file.read()
@@ -157,7 +148,6 @@ def process_request(request, client_socket):
 def handle_client(client_socket):
     try:
         request = client_socket.recv(4096).decode("utf-8") # mozda maknuti utf-8 zbog slika
-        print(request)
 
         # stvori dretvu za obradu zahtjeva - omogucuje obradu svakog zahtjeva u zasebnoj dretvi
         client_thread = threading.Thread(target=process_request, args=(request, client_socket))

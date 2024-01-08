@@ -5,7 +5,6 @@ from sqlite3 import Error
 def create_connection(db_path):
     try:
         conn = sqlite3.connect(db_path)
-        print('Connected to database.')
         return conn
     except sqlite3.Error as e:
         print(f'Error connecting to the database: {e}')

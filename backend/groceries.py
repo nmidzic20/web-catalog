@@ -20,7 +20,6 @@ class GroceryHandler:
 
         try:
             query_result = db.execute_query("SELECT * FROM Grocery")
-            print(query_result)
             return query_result
         finally:
             db.close_connection()
