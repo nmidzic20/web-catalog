@@ -10,14 +10,12 @@ class Grocery {
     return `
             <img src="${this.image}" alt="${this.name}" class="grocery-image">
             <p>${this.name}</p>
-            <p>Carb Count: ${this.carbs} g</p>`;
+            <p><i>Carbohydrates (per 100g): ${this.carbs}g</i></p>`;
   }
 
   getClickableHtmlDisplay() {
     return `
-            <div class='grocery-details' onclick="window.location.href = '/groceries/${
-              this.id
-            }'">
+            <div class='grocery-details' onclick="window.location.href = '/recipes?contains=${this.id}'">
                 ${this.getHtmlDisplay()}
             </div>`;
   }

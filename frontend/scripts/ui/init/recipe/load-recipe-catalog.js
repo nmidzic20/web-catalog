@@ -1,7 +1,24 @@
 function insertRecipesIntoGrid() {
   const grid = document.getElementById("recipes");
 
+  function filterForQueryParameters(recipes) {
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const containsParam = urlParams.get("contains");
+  
+    if (containsParam && Number.isInteger(parseInt(containsParam))) {
+      const containsValue = parseInt(containsParam);
+      return recipes.filter(recipe => {
+        return recipe.groceryItems.some(ingredient => ingredient.id === containsValue);
+      });
+    }
+
+    return recipes;
+  
+  }
+
   fetchRecipes().then((recipes) => {
+    recipes = filterForQueryParameters(recipes);
     if (recipes.length === 0) {
       setVisibility("no-recipes", true);
     } else {
@@ -11,6 +28,7 @@ function insertRecipesIntoGrid() {
         .join("");
     }
   });
+
 }
 
 insertRecipesIntoGrid();
