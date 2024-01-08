@@ -15,7 +15,7 @@ class Grocery {
 
   getClickableHtmlDisplay() {
     return `
-            <div class='grocery-details' onclick="window.location.href = '/recipes?contains=${this.id}'">
+            <div class='grocery-details' onclick="window.location.href = '/recipes?contains=${this.id}'" title="See all recipes containing ${this.name}">
                 ${this.getHtmlDisplay()}
             </div>`;
   }

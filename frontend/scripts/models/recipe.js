@@ -22,15 +22,24 @@ class Recipe {
       .join(", ");
     return `
       <img src="${this.picture}" alt="A picture depicting ${this.name}" class="recipe-image">
-      <h3 class="title">${this.name}</h3>
-      <p>Ingredients: ${groceryItemsHtml}</p>
-      <p>Description: ${this.desc}</p>
-      <p>&Sigma; Carbs per 100g: ${this.calculateCarbs()}g</p>`;
+      <div class="all-recipe-details" id="recipe-details-${this.id}">
+        <h3 class="title">${this.name}</h3>
+        <p>Ingredients: ${groceryItemsHtml}</p>
+        <p>Description: ${this.desc}</p>
+        <p>&Sigma; Carbs (per 100g): ${this.calculateCarbs()}g</p>
+      </div>
+      <div class="recipe-instructions hidden" id="recipe-instructions-${this.id}"><h4>Instructions</h4><br><p>${this.instructions}</p></div>`;
   }
 
   getClickableHtmlDisplay() {
-    return `<div class="recipe-details" onclick="window.location.href = '/recipes/${
-      this.id
-    }'">${this.getHtmlDisplay()}</div>`;
+    return `<div class="recipe-details" id="recipe-${this.id}" onclick="cardFlip('recipe-${this.id}');">${this.getHtmlDisplay()}</div>`;
   }
+}
+
+function cardFlip(id) {
+  var card = document.getElementById(id);
+  var recipeDetails = card.querySelector('.all-recipe-details');
+  var recipeInstructions = card.querySelector('.recipe-instructions');
+  changeVisibility(recipeDetails.id);
+  changeVisibility(recipeInstructions.id);
 }
