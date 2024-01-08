@@ -21,7 +21,7 @@ class Recipe {
       .map((grocery) => grocery.name)
       .join(", ");
     return `
-      <img src="${this.picture}" alt="PICTURE" class="recipe-image">
+      <img src="${this.picture}" alt="A picture depicting ${this.name}" class="recipe-image">
       <h3 class="title">${this.name}</h3>
       <p>Ingredients: ${groceryItemsHtml}</p>
       <p>Description: ${this.desc}</p>

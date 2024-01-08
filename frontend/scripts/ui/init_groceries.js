@@ -1,5 +1,12 @@
 window.onload = () => {
-  loadAddGroceryForm();
-  initAddGroceryButton();
-  setActiveLink();
+  function init() {
+    setActiveLink();
+    loadAddGroceryForm();
+    initAddGroceryButton();
+  }
+  try {
+    init();
+  } catch (e) {
+    init();
+  }
 };

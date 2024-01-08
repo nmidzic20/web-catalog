@@ -1,4 +1,9 @@
-function insertRecipesIntoGrid() {
+async function insertRecipesIntoGrid() {
+  
+  if (!window.location.href.includes("/recipes")) {
+    return;
+  }
+
   const grid = document.getElementById("recipes");
 
   function filterForQueryParameters(recipes) {
@@ -17,7 +22,7 @@ function insertRecipesIntoGrid() {
   
   }
 
-  fetchRecipes().then((recipes) => {
+  var recipes = await fetchRecipes();
     recipes = filterForQueryParameters(recipes);
     if (recipes.length === 0) {
       setVisibility("no-recipes", true);
@@ -27,7 +32,6 @@ function insertRecipesIntoGrid() {
         .map((recipe) => recipe.getClickableHtmlDisplay())
         .join("");
     }
-  });
 
 }
 

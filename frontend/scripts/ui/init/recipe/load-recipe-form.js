@@ -50,60 +50,59 @@ function loadAddRecipeForm() {
     </div>`;
 }
 
-function initGroceryListForRecipeForm() {
-  function initAddGroceryForm() {
-    fetchGroceries().then((groceries) => {
-      const options = groceries.map((item) => {
-        const { id, name, carbs } = item;
-        return `<option value="${id}">${name} (carbs: ${carbs}g)</option>`;
-      });
-
-      const selectInput = document.getElementById("recipe-groceries-list");
-      selectInput.innerHTML = options.join("");
-
-      let originalRows = document.querySelectorAll(".row");
-
-      setGroceryAmountInputId(originalRows[1]);
-
-      document
-        .getElementById("addRow")
-        .addEventListener("click", function (event) {
-          event.preventDefault(); // prevent unwanted focusing in form default behaviour
-
-          let newRow = originalRows[1].cloneNode(true);
-
-          newRow.querySelector("input").value = 1;
-
-          // remove previously selected options from the newly added select
-          let selectedOptions = Array.from(
-            document.querySelectorAll("select option:checked")
-          ).map((option) => option.value);
-          newRow.querySelectorAll("select option").forEach((option) => {
-            if (selectedOptions.includes(option.value)) {
-              option.remove();
-            }
-          });
-
-          let optionsLeft = newRow.querySelectorAll("select option").length;
-          // if all options are spent, do not add new rows
-          if (optionsLeft == 0) return;
-          // if all options are about to be spent, remove button
-          else if (optionsLeft == 1)
-            document.getElementById("addRow").style.display = "none";
-
-          this.parentNode.insertBefore(newRow, this);
-
-          removeSelectOnChangeListeners();
-          setSelectOnChangeListeners();
-          setGroceryAmountInputId(newRow);
-        });
+async function initGroceryListForRecipeForm() {
+  async function initAddGroceryForm() {
+    var groceries = await fetchGroceries();
+    const options = groceries.map((item) => {
+      const { id, name, carbs } = item;
+      return `<option value="${id}">${name} (carbs: ${carbs}g)</option>`;
     });
+
+    const selectInput = document.getElementById("recipe-groceries-list");
+    selectInput.innerHTML = options.join("");
+
+    let originalRows = document.querySelectorAll(".row");
+
+    setGroceryAmountInputId(originalRows[1]);
+
+    document
+      .getElementById("addRow")
+      .addEventListener("click", function (event) {
+        event.preventDefault(); // prevent unwanted focusing in form default behaviour
+
+        let newRow = originalRows[1].cloneNode(true);
+
+        newRow.querySelector("input").value = 1;
+
+        // remove previously selected options from the newly added select
+        let selectedOptions = Array.from(
+          document.querySelectorAll("select option:checked")
+        ).map((option) => option.value);
+        newRow.querySelectorAll("select option").forEach((option) => {
+          if (selectedOptions.includes(option.value)) {
+            option.remove();
+          }
+        });
+
+        let optionsLeft = newRow.querySelectorAll("select option").length;
+        // if all options are spent, do not add new rows
+        if (optionsLeft == 0) return;
+        // if all options are about to be spent, remove button
+        else if (optionsLeft == 1)
+          document.getElementById("addRow").style.display = "none";
+
+        this.parentNode.insertBefore(newRow, this);
+
+        removeSelectOnChangeListeners();
+        setSelectOnChangeListeners();
+        setGroceryAmountInputId(newRow);
+      });
   }
-  initAddGroceryForm();
+  await initAddGroceryForm();
 }
 
-function initAddRecipeForm() {
-  initGroceryListForRecipeForm();
+async function initAddRecipeForm() {
+  await initGroceryListForRecipeForm();
 
   const groceryAmounts = document.getElementById("grocery-amounts");
 
