@@ -1,14 +1,13 @@
 class Grocery {
-  constructor(id, name, carbs, image) {
+  constructor(id, name, carbs) {
     this.id = id;
     this.name = name;
     this.carbs = carbs;
-    this.image = image;
   }
 
   getHtmlDisplay() {
     return `
-            <img src="${this.image}" alt="${this.name}" class="grocery-image">
+            <img src="/api/images/groceries/${this.id}" alt="${this.name}" class="grocery-image">
             <p>${this.name}</p>
             <p>Carb Count: ${this.carbs} g</p>`;
   }

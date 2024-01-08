@@ -5,12 +5,10 @@ class Grocery:
     id: int
     name: str
     carbs: int
-    image: str
 
-    def __init__(self, name, carbs, image):
+    def __init__(self, name, carbs):
         self.name = name
         self.carbs = carbs
-        self.image = image
 
 
 class GroceryHandler:
@@ -30,8 +28,8 @@ class GroceryHandler:
 
         try:
             query = f"""
-                INSERT INTO Grocery(name, carbs, picture)
-                VALUES('{grocery.name}', '{grocery.carbs}', '{grocery.image}');
+                INSERT INTO Grocery(name, carbs)
+                VALUES('{grocery.name}', '{grocery.carbs}');
             """
             db.execute_run_query(query)
         finally:

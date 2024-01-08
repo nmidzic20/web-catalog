@@ -15,7 +15,7 @@ function initAddGroceryButton() {
       return;
     }
 
-    var grocery = new Grocery(-1, name, carbs, image);
+    var grocery = new Grocery(-1, name, carbs);
 
     const body = {
       grocery: grocery,
@@ -104,7 +104,7 @@ function initAddRecipeButton() {
         console.log(groceryAmounts[id]);
         ingredients.push(
           new Ingredient(
-            new Grocery(id, name, carbs, image),
+            new Grocery(id, name, carbs),
             groceryAmounts[id]
           )
         );

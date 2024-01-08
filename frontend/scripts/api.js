@@ -42,8 +42,7 @@ async function fetchGroceries() {
         new Grocery(
           groceryData.id,
           groceryData.name,
-          groceryData.carbs,
-          groceryData.picture
+          groceryData.carbs
         )
     );
   } catch (error) {
