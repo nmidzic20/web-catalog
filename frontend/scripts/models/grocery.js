@@ -9,8 +9,8 @@ class Grocery {
   getHtmlDisplay() {
     return `
             <img src="${this.image}" alt="${this.name}" class="grocery-image">
-            <p>${this.name}</p>
-            <p><i>Carbohydrates (per 100g): ${this.carbs}g</i></p>`;
+            <h3>${this.name}</h3>
+            <p>Carbs (per 100g): ${this.carbs}g</p>`;
   }
 
   getClickableHtmlDisplay() {

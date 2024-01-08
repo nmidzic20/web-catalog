@@ -8,16 +8,24 @@ class Recipe {
     this.instructions = instructions;
   }
 
+  calculateCarbs() {
+    let carbs = 0;
+    for (let i = 0; i < this.groceryItems.length; i++) {
+      carbs += (this.groceryItems[i].carbs / 100) * this.groceryItems[i].amount;
+    }
+    return carbs.toFixed(2);
+  }
+
   getHtmlDisplay() {
     let groceryItemsHtml = this.groceryItems
-      .map((grocery) => grocery)
+      .map((grocery) => grocery.name)
       .join(", ");
     return `
       <img src="${this.picture}" alt="PICTURE" class="recipe-image">
-      <p class="title">${this.name}</p>
+      <h3 class="title">${this.name}</h3>
       <p>Ingredients: ${groceryItemsHtml}</p>
       <p>Description: ${this.desc}</p>
-      <p>Instructions: ${this.instructions}</p>`;
+      <p>&Sigma; Carbs per 100g: ${this.calculateCarbs()}g</p>`;
   }
 
   getClickableHtmlDisplay() {
