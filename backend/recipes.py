@@ -33,9 +33,9 @@ class RecipeHandler():
 
         try:
             query = """
-                SELECT Grocery.name
-                FROM Ingredient
-                JOIN Grocery ON Ingredient.grocery_id = Grocery.id
+                SELECT Grocery.*, Ingredient.amount
+                FROM Grocery
+                INNER JOIN Ingredient ON Grocery.id = Ingredient.grocery_id
                 WHERE Ingredient.recipe_id = ?
             """
             query_result = db.execute_query(query, (recipeId,))            
