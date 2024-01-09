@@ -14,21 +14,18 @@ function initAddGroceryButton() {
       openCustomAlert("Please enter a valid number for grocery carbs.");
       return;
     }
-
     
     const reader = new FileReader();
     reader.onload = (event) => {
       const fileBytes = new Uint8Array(event.target.result);
       const formData = new FormData();
-      let grocery = new Grocery(-1, name, carbs, fileBytes);
-
-      let body = {
-        grocery: grocery
-      };
-    
-      formData.append('grocery', JSON.stringify(body));
-
+      const fileString = btoa(String.fromCharCode.apply(null, fileBytes));
+      let grocery = new Grocery(-1, name, carbs, fileString);
+      console.log("Logging grocery", {grocery: grocery});
+      formData.append("grocery", JSON.stringify({grocery: grocery}));
+      console.log("logging the form data");
       console.log(formData);
+      console.log("logging it stringified");
       console.log(JSON.stringify(formData));
 
       postGrocery(formData);

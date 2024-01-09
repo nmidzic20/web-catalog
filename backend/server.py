@@ -28,17 +28,28 @@ def request_handler(request):
 
         if content_length > 0:
 
+            body = ""
+            for i in range(-1, -6, -1):
+                if '"image":' in headers[i]:
+                    body = headers[i]
+                    break
+            else:
+                print(headers)
+                return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
+            
+            print("printing out the headers")
             print(headers)
 
-            body = headers[-3]
-            print("body")
+            print("printing out the body")
             print(body)
-            print("body")
+
             dataJson = body[:content_length]
 
+            print("printing out the jsonData")
             print(dataJson)
             data = json.loads(dataJson)
 
+            print("printing out the jsonData when parsed")
             print(data)
 
             if requested_path == "/recipes":
