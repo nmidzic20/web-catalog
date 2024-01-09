@@ -19,15 +19,14 @@ function initAddGroceryButton() {
     reader.onload = (event) => {
       const fileBytes = new Uint8Array(event.target.result);
       const formData = new FormData();
-      const fileString = btoa(String.fromCharCode.apply(null, fileBytes));
+      let fileString = "";
+      for (let i = 0; i < fileBytes.length; i++) {
+        fileString += String.fromCharCode(fileBytes[i]);
+      }
+      fileString = btoa(fileString);
       let grocery = new Grocery(-1, name, carbs, fileString);
       console.log("Logging grocery", {grocery: grocery});
       formData.append("grocery", JSON.stringify({grocery: grocery}));
-      console.log("logging the form data");
-      console.log(formData);
-      console.log("logging it stringified");
-      console.log(JSON.stringify(formData));
-
       postGrocery(formData);
     };
     reader.readAsArrayBuffer(image);

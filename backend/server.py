@@ -5,6 +5,8 @@ import json
 import threading
 
 import sys
+import base64
+import datetime
 sys.path.insert(1, '..')
 
 import backend.recipes as recipes
@@ -28,29 +30,24 @@ def request_handler(request):
 
         if content_length > 0:
 
+
+            print('discovered headers --------------- ')
+
+            for header in headers:
+                print(header)
+
+            print('---------------------------------- ')
             body = ""
-            for i in range(-1, -6, -1):
+            # the index at which the body is located is random, so we have to check the last 5 headers
+            for i in range(-1, -6, -1): 
                 if '"image":' in headers[i]:
                     body = headers[i]
                     break
             else:
-                print(headers)
                 return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
             
-            print("printing out the headers")
-            print(headers)
-
-            print("printing out the body")
-            print(body)
-
             dataJson = body[:content_length]
-
-            print("printing out the jsonData")
-            print(dataJson)
             data = json.loads(dataJson)
-
-            print("printing out the jsonData when parsed")
-            print(data)
 
             if requested_path == "/recipes":
                 # obrisati da ne stvara problem kod inicijalizacije Recipea
@@ -68,15 +65,20 @@ def request_handler(request):
                     ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
-                print("aaaaaaaaa")
                 if "id" in data['grocery']:
                     del data['grocery']['id']
+                
+                image_data = base64.b64decode(data['grocery']['image'])
+                image_filename = f"{data['grocery']['name']}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
+                image_path = f"{IMAGE_DIR}/{image_filename}"
+                
+                with open(image_path, "wb") as image_file:
+                    image_file.write(image_data)
+                
+                data['grocery']['image'] = image_filename
 
-                print("bbbbbbbbbb")
                 newGrocery = groceries.Grocery(**data['grocery'])
-                print("ccccccccc")
                 groceries.GroceryHandler().create_grocery(newGrocery)
-                print("ddddddd")
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
