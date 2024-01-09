@@ -1,8 +1,9 @@
 class Grocery {
-  constructor(id, name, carbs) {
+  constructor(id, name, carbs, image) {
     this.id = id;
     this.name = name;
     this.carbs = carbs;
+    this.image = image;
   }
 
   getHtmlDisplay() {

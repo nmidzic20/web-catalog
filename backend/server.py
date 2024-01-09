@@ -27,10 +27,19 @@ def request_handler(request):
                 break
 
         if content_length > 0:
-            body = headers[-1]
+
+            print(headers)
+
+            body = headers[-3]
+            print("body")
+            print(body)
+            print("body")
             dataJson = body[:content_length]
 
+            print(dataJson)
             data = json.loads(dataJson)
+
+            print(data)
 
             if requested_path == "/recipes":
                 # obrisati da ne stvara problem kod inicijalizacije Recipea
@@ -48,11 +57,15 @@ def request_handler(request):
                     ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
+                print("aaaaaaaaa")
                 if "id" in data['grocery']:
                     del data['grocery']['id']
 
+                print("bbbbbbbbbb")
                 newGrocery = groceries.Grocery(**data['grocery'])
+                print("ccccccccc")
                 groceries.GroceryHandler().create_grocery(newGrocery)
+                print("ddddddd")
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
