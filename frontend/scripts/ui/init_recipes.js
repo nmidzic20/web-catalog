@@ -1,6 +1,13 @@
 window.onload = () => {
-  loadAddRecipeForm();
-  initAddRecipeForm();
-  initAddRecipeButton();
-  setActiveLink();
+  async function init() {
+    setActiveLink();
+    loadAddRecipeForm();
+    initAddRecipeForm();
+    initAddRecipeButton();
+  }
+  try {
+    init();
+  } catch (e) {
+    init();
+  }
 };
