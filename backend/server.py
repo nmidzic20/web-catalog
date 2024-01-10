@@ -6,7 +6,7 @@ import threading
 
 import sys
 import base64
-import datetime
+import os
 sys.path.insert(1, '..')
 
 import backend.recipes as recipes
@@ -69,16 +69,18 @@ def request_handler(request):
                     del data['grocery']['id']
                 
                 image_data = base64.b64decode(data['grocery']['image'])
-                image_filename = f"{data['grocery']['name']}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
-                image_path = f"{IMAGE_DIR}/{image_filename}"
+                newGrocery = groceries.Grocery(**data['grocery'])
+                grocery_id = groceries.GroceryHandler().create_grocery(newGrocery)
+
+                image_filename = f"{grocery_id}.jpg"
+                image_path = f"{IMAGE_DIR}/groceries/{image_filename}"
+                
+                if not os.path.exists(f"{IMAGE_DIR}/groceries/"):
+                    os.mkdir(f"{IMAGE_DIR}/groceries/")
                 
                 with open(image_path, "wb") as image_file:
                     image_file.write(image_data)
-                
-                data['grocery']['image'] = image_filename
 
-                newGrocery = groceries.Grocery(**data['grocery'])
-                groceries.GroceryHandler().create_grocery(newGrocery)
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":

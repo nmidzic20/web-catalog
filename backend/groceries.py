@@ -34,5 +34,9 @@ class GroceryHandler:
                 VALUES('{grocery.name}', '{grocery.carbs}');
             """
             db.execute_run_query(query)
+
+            query = "SELECT last_insert_rowid()"
+            last_id = db.execute_query(query)[0][0]
+            return last_id
         finally:
             db.close_connection()
