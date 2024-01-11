@@ -8,7 +8,7 @@ class Grocery {
 
   getHtmlDisplay() {
     return `
-            <img src="${this.image}" alt="${this.name}" class="grocery-image">
+            <img src="/api/images/groceries/${this.id}.jpg" alt="A picture depicting ${this.name}" class="grocery-image">
             <h3>${this.name}</h3>
             <p>Carbs (per 100g): ${this.carbs}g</p>`;
   }

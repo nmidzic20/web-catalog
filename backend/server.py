@@ -5,6 +5,8 @@ import json
 import threading
 
 import sys
+import base64
+import os
 sys.path.insert(1, '..')
 
 import backend.recipes as recipes
@@ -27,11 +29,27 @@ def request_handler(request):
                 break
 
         if content_length > 0:
-            body = headers[-1]
-            dataJson = body[:content_length]
+            body = ""
+            # the index at which the body is located is random, so we have to check the last 7 headers
+            for i in range(-1, -8, -1):
+                if '"image":' in headers[i]:
+                    body = headers[i]
+                    break
+            else:
+                return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
+            
+            ingredients_body = ""
 
-            print("POST request received")
+            for i in range(-1, -8, -1):
+                if '"ingredients":' in headers[i]:
+                    ingredients_body = headers[i]
+                    break
+            
+            dataJson = body[:content_length]
             data = json.loads(dataJson)
+
+            dataJson = ingredients_body[:content_length]
+            ingredients_data = json.loads(dataJson)
 
             if requested_path == "/recipes":
                 # obrisati da ne stvara problem kod inicijalizacije Recipea
@@ -41,25 +59,40 @@ def request_handler(request):
                 if "groceryItems" in data['recipe']:
                     del data['recipe']['groceryItems']
 
+                image_data = base64.b64decode(data['recipe']['image'])
                 newRecipe = recipes.Recipe(**data['recipe'])
-                newRecipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
+                recipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
 
-                ingredientArray = data['ingredients']
-                print(ingredientArray)
+                image_filename = f"{recipe_id}.jpg"
+                image_path = f"{IMAGE_DIR}/recipes/{image_filename}"
+                
+                if not os.path.exists(f"{IMAGE_DIR}/recipes/"):
+                    os.mkdir(f"{IMAGE_DIR}/recipes/")
+                
+                with open(image_path, "wb") as image_file:
+                    image_file.write(image_data)
+                
+                ingredientArray = ingredients_data['ingredients']
                 for ingredient in ingredientArray:
-                    print(ingredient['grocery']['id'])
-                    print(ingredient['grocery']['name'])
-                    print(ingredient['grocery']['carbs'])
-                    print(ingredient['grocery']['image'])
-                    print(ingredient['amount'])
-                    ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
+                    ingredients.IngredientHandler().create_ingredient(recipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
                 if "id" in data['grocery']:
                     del data['grocery']['id']
-
+                
+                image_data = base64.b64decode(data['grocery']['image'])
                 newGrocery = groceries.Grocery(**data['grocery'])
-                groceries.GroceryHandler().create_grocery(newGrocery)
+                grocery_id = groceries.GroceryHandler().create_grocery(newGrocery)
+
+                image_filename = f"{grocery_id}.jpg"
+                image_path = f"{IMAGE_DIR}/groceries/{image_filename}"
+                
+                if not os.path.exists(f"{IMAGE_DIR}/groceries/"):
+                    os.mkdir(f"{IMAGE_DIR}/groceries/")
+                
+                with open(image_path, "wb") as image_file:
+                    image_file.write(image_data)
+
 
             return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
     elif request_type == "GET":
@@ -82,7 +115,7 @@ def request_handler(request):
             return response_headers + response_json
         elif requested_path == "/api/groceries":
             result = groceries.GroceryHandler().get_all_groceries()
-            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3]} for item in result]
+            list_of_dicts = [{'id': item[0], 'name': item[1], 'carbs': item[2]} for item in result]
 
             response_json = json.dumps({"groceries": list_of_dicts})
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
@@ -160,7 +193,6 @@ def process_request(request, client_socket):
 def handle_client(client_socket):
     try:
         request = client_socket.recv(4096).decode("utf-8") # mozda maknuti utf-8 zbog slika
-        print(request)
 
         # stvori dretvu za obradu zahtjeva - omogucuje obradu svakog zahtjeva u zasebnoj dretvi
         client_thread = threading.Thread(target=process_request, args=(request, client_socket))

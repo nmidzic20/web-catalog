@@ -5,7 +5,6 @@ from sqlite3 import Error
 def create_connection(db_path):
     try:
         conn = sqlite3.connect(db_path)
-        print('Connected to database.')
         return conn
     except sqlite3.Error as e:
         print(f'Error connecting to the database: {e}')
@@ -24,17 +23,17 @@ def execute_commands(conn, command):
 def insert_dummy_data(conn):
     cursor = conn.cursor()
     
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Apple', 10, 'https://www.biobio.hr/upload/catalog/product/28233/thumb/18301_650x650r.webp');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Chicken meat', 5, 'https://www.vecernji.hr/media/img/35/dd/a1fcf70b5c25696ff01d.jpeg');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Banana', 20, 'https://atlas-content-cdn.pixelsquid.com/assets_v2/244/2442895388911343087/jpeg-600/G03.jpg?modifiedAt=1');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Orange', 30, 'https://media.istockphoto.com/id/494037460/photo/orange-fruit-isolated-on-a-white-background.jpg?s=612x612&w=0&k=20&c=Podpyj2fviG76mCSsr3aR6O3t4o3LdkahTHSU0GBCmQ=');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Pineapple', 40, 'https://yogisorganic.com/cdn/shop/products/Pineapple_600x@2x.jpg?v=1496866405');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Mango', 50, 'https://st.depositphotos.com/1642482/3698/i/450/depositphotos_36983317-stock-photo-mango.jpg');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Peach', 60, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Prunus_persica_-_Peach_Hungary.jpg/1280px-Prunus_persica_-_Peach_Hungary.jpg');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Pear', 70, 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Pears.jpg');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Strawberry', 80, 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Garden_strawberry_%28Fragaria_%C3%97_ananassa%29.jpg/1280px-Garden_strawberry_%28Fragaria_%C3%97_ananassa%29.jpg');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Blueberry', 90, 'https://hips.hearstapps.com/hmg-prod/images/blueberries-1527711083.jpg?crop=1.00xw:0.753xh;0,0.0816xh&resize=1200:*');")
-    cursor.execute("INSERT INTO Grocery (name, carbs, picture) VALUES ('Raspberry', 100, 'https://www.incredibleseeds.ca/cdn/shop/products/Tree-BlackRaspberry.jpg?v=1669396460');")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Apple', 10);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Chicken meat', 5);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Banana', 20);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Orange', 30);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Pineapple', 40);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Mango', 50);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Peach', 60);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Pear', 70);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Strawberry', 80);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Blueberry', 90);")
+    cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Raspberry', 100);")
 
 
     cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Apple Pie', 'Great dessert', 'https://www.inspiredtaste.net/wp-content/uploads/2019/10/Homemade-Apple-Pie-Recipe-6-1200.jpg', 'No instructions needed for this meal.');")
@@ -53,8 +52,7 @@ if __name__ == '__main__':
     sql_create_groceries_table = '''CREATE TABLE IF NOT EXISTS Grocery (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            carbs INTEGER NOT NULL,
-            picture TEXT
+            carbs INTEGER NOT NULL
         );
     '''
 

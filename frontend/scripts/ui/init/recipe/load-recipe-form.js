@@ -34,7 +34,7 @@ function loadAddRecipeForm() {
                 <label for="recipe-name">Name:</label>
                 <input type="text" id="recipe-name" name="recipe-name" required>
                 <label for="recipe-image">Image:</label>
-                <input type="text" id="recipe-image" name="recipe-image">
+                <input type="file" id="recipe-image" name="recipe-image">
               </fieldset>
               <fieldset>
                 <label for="recipe-description">Description:</label>

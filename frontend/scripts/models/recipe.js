@@ -1,8 +1,8 @@
 class Recipe {
-  constructor(id, name, picture, groceryItems, desc, instructions) {
+  constructor(id, name, image, groceryItems, desc, instructions) {
     this.id = id;
     this.name = name;
-    this.picture = picture;
+    this.image = image;
     this.groceryItems = groceryItems;
     this.desc = desc;
     this.instructions = instructions;
@@ -21,7 +21,7 @@ class Recipe {
       .map((grocery) => grocery.name)
       .join(", ");
     return `
-      <img src="${this.picture}" alt="A picture depicting ${this.name}" class="recipe-image">
+      <img src="/api/images/recipes/${this.id}.jpg" alt="A picture depicting ${this.name}" class="recipe-image">
       <div class="all-recipe-details" id="recipe-details-${this.id}">
         <h3 class="title">${this.name}</h3>
         <p>Ingredients: ${groceryItemsHtml}</p>

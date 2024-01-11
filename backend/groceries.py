@@ -5,7 +5,7 @@ class Grocery:
     id: int
     name: str
     carbs: int
-    image: str
+    image: object
 
     def __init__(self, name, carbs, image):
         self.name = name
@@ -20,7 +20,6 @@ class GroceryHandler:
 
         try:
             query_result = db.execute_query("SELECT * FROM Grocery")
-            print(query_result)
             return query_result
         finally:
             db.close_connection()
@@ -31,9 +30,13 @@ class GroceryHandler:
 
         try:
             query = f"""
-                INSERT INTO Grocery(name, carbs, picture)
-                VALUES('{grocery.name}', '{grocery.carbs}', '{grocery.image}');
+                INSERT INTO Grocery(name, carbs)
+                VALUES('{grocery.name}', '{grocery.carbs}');
             """
             db.execute_run_query(query)
+
+            query = "SELECT last_insert_rowid()"
+            last_id = db.execute_query(query)[0][0]
+            return last_id
         finally:
             db.close_connection()

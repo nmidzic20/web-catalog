@@ -18,7 +18,7 @@ async function fetchRecipes() {
         new Recipe(
           recipeData.id,
           recipeData.name,
-          recipeData.picture,
+          recipeData.image,
           recipeData.groceryItems,
           recipeData.description,
           recipeData.instructions
@@ -42,8 +42,7 @@ async function fetchGroceries() {
         new Grocery(
           groceryData.id,
           groceryData.name,
-          groceryData.carbs,
-          groceryData.picture
+          groceryData.carbs
         )
     );
   } catch (error) {
