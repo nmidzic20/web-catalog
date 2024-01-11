@@ -19,7 +19,7 @@ IMAGE_DIR = "../images"
 def request_handler(request):
 
     headers = request.split("\n")
-    request_type, requested_path, http = headers[0].split()
+    request_type, requested_path, _ = headers[0].split()
 
     if request_type == "POST":
         content_length = 0
@@ -102,14 +102,15 @@ def request_handler(request):
             return ""
         elif requested_path == "/api/recipes":
             result = recipes.RecipeHandler().get_all_recipes()
-            list_of_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'picture': item[3], 'instructions': item[4]} for item in result]
+            list_of_recipe_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'picture': item[3], 'instructions': item[4]} for item in result]
 
-            for recipe in list_of_dicts:
+            for recipe in list_of_recipe_dicts:
                 recipe_id = recipe['id']
-                grocery_items = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
-                recipe['groceryItems'] = grocery_items
+                result = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
+                list_of_ingredients = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3], 'amount': item[4]} for item in result]
+                recipe['groceryItems'] = list_of_ingredients
     
-            response_json = json.dumps({"recipes": list_of_dicts})
+            response_json = json.dumps({"recipes": list_of_recipe_dicts})
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
             return response_headers + response_json
         elif requested_path == "/api/groceries":
@@ -141,23 +142,27 @@ def request_handler(request):
             head_content = head.read()
             head.close()
 
-            if "." not in requested_path:
-                requested_path += ".html"
+            sanitized_path = requested_path.split("?")[0]
 
-            mime_type, _ = mimetypes.guess_type(requested_path)
+            if "." not in sanitized_path:
+                sanitized_path += ".html"
 
-            file = open(FRONTEND_DIR + requested_path)
+            mime_type, _ = mimetypes.guess_type(sanitized_path)
+            print(sanitized_path)
+            print(mime_type)
+
+            file = open(FRONTEND_DIR + sanitized_path)
             file_content = file.read()
             file.close()
 
             page = ""
 
-            if ".html" in requested_path:
+            if ".html" in sanitized_path:
                 page = index_content.replace("#catalog#", file_content)
                 page = page.replace("#head#", head_content)
-                if "groceries" in requested_path:
+                if "groceries" in sanitized_path:
                     page = page.replace("#init#", '<script defer src="./scripts/ui/init_groceries.js"></script>')
-                elif "recipes" in requested_path:
+                elif "recipes" in sanitized_path:
                     page = page.replace("#init#", '<script defer src="./scripts/ui/init_recipes.js"></script>')
             else:
                 page = file_content
