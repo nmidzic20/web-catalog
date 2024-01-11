@@ -4,14 +4,14 @@ class Recipe():
     id: int
     name: str
     desc: str
-    picture: str
     instructions: str
+    image: str
 
-    def __init__(self, name, desc, picture, instructions):
+    def __init__(self, name, desc, instructions, image):
         self.name = name
         self.desc = desc
-        self.picture = picture
         self.instructions = instructions
+        self.image = image
 
 
 class RecipeHandler():
@@ -48,8 +48,8 @@ class RecipeHandler():
 
         try:
             query = f"""
-                INSERT INTO Recipe(name, desc, picture, instructions)
-                VALUES('{recipe.name}', '{recipe.desc}', '{recipe.picture}', '{recipe.instructions}');
+                INSERT INTO Recipe(name, desc, instructions)
+                VALUES('{recipe.name}', '{recipe.desc}', '{recipe.instructions}');
             """
             db.execute_run_query(query)
 

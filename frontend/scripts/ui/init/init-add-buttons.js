@@ -47,7 +47,7 @@ function initAddRecipeButton() {
   const addRecipeButton = document.getElementById("add-recipe");
   addRecipeButton.addEventListener("click", () => {
     let name = document.getElementById("recipe-name").value;
-    let image = document.getElementById("recipe-image").value;
+    let image = document.getElementById("recipe-image").files[0];
     let description = document.getElementById("recipe-description").value;
     let instructions = document.getElementById("recipe-instructions").value;
 
@@ -71,15 +71,6 @@ function initAddRecipeButton() {
     var groceryItems = [];
     var selectedItems = document.querySelectorAll(
       "#recipe-groceries-list option:checked"
-    );
-
-    var recipe = new Recipe(
-      -1,
-      name,
-      image,
-      groceryItems,
-      description,
-      instructions
     );
 
     var ingredients = [];
@@ -107,9 +98,6 @@ function initAddRecipeButton() {
         let id = item.value;
         let name = match[1];
         let carbs = parseInt(match[2]);
-        let image = "";
-        console.log(groceryAmounts);
-        console.log(groceryAmounts[id]);
         ingredients.push(
           new Ingredient(
             new Grocery(id, name, carbs),
@@ -119,15 +107,31 @@ function initAddRecipeButton() {
       } else ingredients.push({});
     });
 
-    const body = {
-      recipe: recipe,
-      ingredients: ingredients,
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const fileBytes = new Uint8Array(event.target.result);
+      const formData = new FormData();
+      let fileString = "";
+      for (let i = 0; i < fileBytes.length; i++) {
+        fileString += String.fromCharCode(fileBytes[i]);
+      }
+      fileString = btoa(fileString);
+      let recipe = new Recipe(
+        -1,
+        name,
+        fileString,
+        groceryItems,
+        description,
+        instructions
+      );
+      console.log("Logging recipe", {recipe: recipe});
+      console.log("Logging ingredients", {ingredients: ingredients});
+      formData.append("recipe", JSON.stringify({recipe: recipe}));
+      formData.append("ingredients", JSON.stringify({ingredients: ingredients}));
+      postRecipe(formData);
     };
-    const jsonBody = JSON.stringify(body);
+    reader.readAsArrayBuffer(image);
 
-    console.log(body);
-
-    postRecipe(jsonBody);
     closeForm("recipe-form");
   });
 }

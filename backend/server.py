@@ -29,25 +29,27 @@ def request_handler(request):
                 break
 
         if content_length > 0:
-
-
-            print('discovered headers --------------- ')
-
-            for header in headers:
-                print(header)
-
-            print('---------------------------------- ')
             body = ""
-            # the index at which the body is located is random, so we have to check the last 5 headers
-            for i in range(-1, -6, -1): 
+            # the index at which the body is located is random, so we have to check the last 7 headers
+            for i in range(-1, -8, -1):
                 if '"image":' in headers[i]:
                     body = headers[i]
                     break
             else:
                 return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
             
+            ingredients_body = ""
+
+            for i in range(-1, -8, -1):
+                if '"ingredients":' in headers[i]:
+                    ingredients_body = headers[i]
+                    break
+            
             dataJson = body[:content_length]
             data = json.loads(dataJson)
+
+            dataJson = ingredients_body[:content_length]
+            ingredients_data = json.loads(dataJson)
 
             if requested_path == "/recipes":
                 # obrisati da ne stvara problem kod inicijalizacije Recipea
@@ -57,12 +59,22 @@ def request_handler(request):
                 if "groceryItems" in data['recipe']:
                     del data['recipe']['groceryItems']
 
+                image_data = base64.b64decode(data['recipe']['image'])
                 newRecipe = recipes.Recipe(**data['recipe'])
-                newRecipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
+                recipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
 
-                ingredientArray = data['ingredients']
+                image_filename = f"{recipe_id}.jpg"
+                image_path = f"{IMAGE_DIR}/recipes/{image_filename}"
+                
+                if not os.path.exists(f"{IMAGE_DIR}/recipes/"):
+                    os.mkdir(f"{IMAGE_DIR}/recipes/")
+                
+                with open(image_path, "wb") as image_file:
+                    image_file.write(image_data)
+                
+                ingredientArray = ingredients_data['ingredients']
                 for ingredient in ingredientArray:
-                    ingredients.IngredientHandler().create_ingredient(newRecipe_id, ingredient['grocery']['id'], ingredient['amount'])
+                    ingredients.IngredientHandler().create_ingredient(recipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
             elif requested_path == "/groceries":
                 if "id" in data['grocery']:
