@@ -10,14 +10,17 @@
 }
 
 .grocery-details img {
-  /*width: 100%;
-  height: auto;
-  max-height: 70%;*/
   width: 100%;
   height: 180px;
   object-fit: cover;
   border-radius: 10px;
   padding-bottom: 10px;
+
+  transition: transform 1s ease;
+}
+
+.grocery-details img:hover {
+  transform: scale(1.2);
 }
 
 .grocery-details:hover {
