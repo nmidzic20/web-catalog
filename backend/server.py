@@ -58,7 +58,6 @@ def request_handler(request):
 
                 if "groceryItems" in data['recipe']:
                     del data['recipe']['groceryItems']
-
                 image_data = base64.b64decode(data['recipe']['image'])
                 newRecipe = recipes.Recipe(**data['recipe'])
                 recipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
@@ -107,7 +106,7 @@ def request_handler(request):
             for recipe in list_of_recipe_dicts:
                 recipe_id = recipe['id']
                 result = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
-                list_of_ingredients = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'picture': item[3], 'amount': item[4]} for item in result]
+                list_of_ingredients = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'amount': item[3]} for item in result]
                 recipe['groceryItems'] = list_of_ingredients
     
             response_json = json.dumps({"recipes": list_of_recipe_dicts})
