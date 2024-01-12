@@ -4,9 +4,9 @@ function initAddGroceryButton() {
   addGroceryButton.addEventListener("click", () => {
     let name = document.getElementById("grocery-name").value;
     let carbs = document.getElementById("grocery-carbs").value;
-    let image = document.getElementById("grocery-image").files;
+    let image = document.getElementById("grocery-image").files[0];
 
-    if (isEmptyField(name) || isEmptyField(image)) {
+    if (isEmptyField(name) || (image && isEmptyField(image))) {
       openCustomAlert("Please fill in all fields before adding a grocery.");
       return;
     }
@@ -53,7 +53,7 @@ function initAddRecipeButton() {
 
     if (
       isEmptyField(name) ||
-      isEmptyField(image) ||
+      (image && isEmptyField(image)) ||
       isEmptyField(description) ||
       isEmptyField(instructions)
     ) {
