@@ -5,13 +5,11 @@ class Recipe():
     name: str
     desc: str
     instructions: str
-    image: str
 
-    def __init__(self, name, desc, instructions, image):
+    def __init__(self, name, desc, instructions):
         self.name = name
         self.desc = desc
         self.instructions = instructions
-        self.image = image
 
 
 class RecipeHandler():

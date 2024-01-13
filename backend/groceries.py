@@ -5,12 +5,10 @@ class Grocery:
     id: int
     name: str
     carbs: int
-    image: object
 
-    def __init__(self, name, carbs, image):
+    def __init__(self, name, carbs):
         self.name = name
         self.carbs = carbs
-        self.image = image
 
 
 class GroceryHandler:
