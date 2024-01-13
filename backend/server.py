@@ -92,7 +92,7 @@ def request_handler(request):
             return ""
         elif requested_path == "/api/recipes":
             result = recipes.RecipeHandler().get_all_recipes()
-            list_of_recipe_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'picture': item[3], 'instructions': item[4]} for item in result]
+            list_of_recipe_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'instructions': item[3]} for item in result]
 
             for recipe in list_of_recipe_dicts:
                 recipe_id = recipe['id']
