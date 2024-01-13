@@ -18,7 +18,6 @@ async function fetchRecipes() {
         new Recipe(
           recipeData.id,
           recipeData.name,
-          recipeData.image,
           recipeData.groceryItems,
           recipeData.description,
           recipeData.instructions
@@ -39,11 +38,7 @@ async function fetchGroceries() {
     const data = await response.json();
     return data.groceries.map(
       (groceryData) =>
-        new Grocery(
-          groceryData.id,
-          groceryData.name,
-          groceryData.carbs
-        )
+        new Grocery(groceryData.id, groceryData.name, groceryData.carbs)
     );
   } catch (error) {
     console.error("Error fetching groceries:", error);
@@ -51,38 +46,44 @@ async function fetchGroceries() {
   }
 }
 
-function postRecipe(jsonBody) {
-  fetch(urlRecipes, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonBody,
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      console.log("Response from server:", data);
-      insertRecipesIntoGrid();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+async function postRecipe(jsonBody) {
+  try {
+    const response = await fetch(urlRecipes, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonBody,
     });
+
+    let data = JSON.parse(await response.text());
+    console.log("Response from server:", data);
+
+    insertRecipesIntoGrid();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-function postGrocery(jsonBody) {
-  fetch(urlGroceries, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonBody,
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      console.log("Response from server:", data);
-      insertGroceriesIntoGrid();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+async function postGrocery(jsonBody) {
+  try {
+    const response = await fetch(urlGroceries, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonBody,
     });
+
+    let data = JSON.parse(await response.text());
+    console.log("Response from server:", data);
+
+    insertGroceriesIntoGrid();
+
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    return error;
+  }
 }
