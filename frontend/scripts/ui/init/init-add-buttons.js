@@ -32,17 +32,6 @@ function initAddGroceryButton() {
   });
 }
 
-function saveImage(image, type, id) {
-  const reader = new FileReader();
-
-  reader.onload = function (e) {
-    const imageData = e.target.result;
-    localStorage.setItem(`${type}-${id}`, imageData);
-  };
-
-  reader.readAsDataURL(image);
-}
-
 function initShowGroceryFormButton() {
   const showGroceryFormButton = document.getElementById("grocery-form-display");
   showGroceryFormButton.addEventListener("click", () => {
