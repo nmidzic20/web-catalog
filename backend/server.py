@@ -39,13 +39,8 @@ def request_handler(request):
                     ingredients_body = headers[i]
                     break
             
-            print(body)
-
             dataJson = body[:content_length]
-
-            print(dataJson)
             data = json.loads(dataJson)
-            print(data)
 
             if (ingredients_body != ""):
                 dataJson = ingredients_body[:content_length]
@@ -99,8 +94,6 @@ def request_handler(request):
                 result = recipes.RecipeHandler().get_ingredients_for_recipe(recipe_id)
                 list_of_ingredients = [{'id': item[0], 'name': item[1], 'carbs': item[2], 'amount': item[3]} for item in result]
                 recipe['groceryItems'] = list_of_ingredients
-
-            print(list_of_recipe_dicts)
     
             response_json = json.dumps({"recipes": list_of_recipe_dicts})
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
