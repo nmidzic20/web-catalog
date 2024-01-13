@@ -23,21 +23,15 @@ def request_handler(request):
 
     if request_type == "POST":
         content_length = 0
+
         for header in headers:
             if "Content-Length" in header:
                 content_length = int(header.split(":")[1])
                 break
 
         if content_length > 0:
-            body = ""
-            # the index at which the body is located is random, so we have to check the last 7 headers
-            for i in range(-1, -8, -1):
-                if '"image":' in headers[i]:
-                    body = headers[i]
-                    break
-            else:
-                return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
-            
+            body = headers[-1]
+ 
             ingredients_body = ""
 
             for i in range(-1, -8, -1):
@@ -48,8 +42,9 @@ def request_handler(request):
             dataJson = body[:content_length]
             data = json.loads(dataJson)
 
-            dataJson = ingredients_body[:content_length]
-            ingredients_data = json.loads(dataJson)
+            if (ingredients_body != ""):
+                dataJson = ingredients_body[:content_length]
+                ingredients_data = json.loads(dataJson)
 
             if requested_path == "/recipes":
                 # obrisati da ne stvara problem kod inicijalizacije Recipea
@@ -58,42 +53,33 @@ def request_handler(request):
 
                 if "groceryItems" in data['recipe']:
                     del data['recipe']['groceryItems']
-                image_data = base64.b64decode(data['recipe']['image'])
+
                 newRecipe = recipes.Recipe(**data['recipe'])
                 recipe_id = recipes.RecipeHandler().create_recipe(newRecipe)
-
-                image_filename = f"{recipe_id}.jpg"
-                image_path = f"{IMAGE_DIR}/recipes/{image_filename}"
-                
-                if not os.path.exists(f"{IMAGE_DIR}/recipes/"):
-                    os.mkdir(f"{IMAGE_DIR}/recipes/")
-                
-                with open(image_path, "wb") as image_file:
-                    image_file.write(image_data)
                 
                 ingredientArray = ingredients_data['ingredients']
                 for ingredient in ingredientArray:
                     ingredients.IngredientHandler().create_ingredient(recipe_id, ingredient['grocery']['id'], ingredient['amount'])
                   
+                response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+                response_json = json.dumps({"id": recipe_id, "message": "POST request successfully processed"})
+                response = response_headers + response_json
+                return response
+            
             elif requested_path == "/groceries":
+
                 if "id" in data['grocery']:
                     del data['grocery']['id']
                 
-                image_data = base64.b64decode(data['grocery']['image'])
                 newGrocery = groceries.Grocery(**data['grocery'])
                 grocery_id = groceries.GroceryHandler().create_grocery(newGrocery)
-
-                image_filename = f"{grocery_id}.jpg"
-                image_path = f"{IMAGE_DIR}/groceries/{image_filename}"
                 
-                if not os.path.exists(f"{IMAGE_DIR}/groceries/"):
-                    os.mkdir(f"{IMAGE_DIR}/groceries/")
-                
-                with open(image_path, "wb") as image_file:
-                    image_file.write(image_data)
+                response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+                response_json = json.dumps({"id": grocery_id, "message": "POST request successfully processed"})
+                response = response_headers + response_json
+                return response
 
-
-            return "HTTP/1.1 200 OK\n\nPOST request successfully processed\n"    
+        return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
     elif request_type == "GET":
         if requested_path == "/":
             requested_path = "/groceries"
@@ -101,7 +87,7 @@ def request_handler(request):
             return ""
         elif requested_path == "/api/recipes":
             result = recipes.RecipeHandler().get_all_recipes()
-            list_of_recipe_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'picture': item[3], 'instructions': item[4]} for item in result]
+            list_of_recipe_dicts = [{'id': item[0], 'name': item[1], 'description': item[2], 'instructions': item[3]} for item in result]
 
             for recipe in list_of_recipe_dicts:
                 recipe_id = recipe['id']
@@ -182,7 +168,7 @@ def process_request(request, client_socket):
             client_socket.send(response[0].encode())
             client_socket.send(response[1])
         else:
-            client_socket.sendall(response.encode())  # mozda ce olaksati slanje slika
+            client_socket.sendall(response.encode())
     except Exception as exc:
         print(exc)
     finally:
@@ -191,7 +177,7 @@ def process_request(request, client_socket):
 
 def handle_client(client_socket):
     try:
-        request = client_socket.recv(4096).decode("utf-8") # mozda maknuti utf-8 zbog slika
+        request = client_socket.recv(4096).decode("utf-8")
 
         # stvori dretvu za obradu zahtjeva - omogucuje obradu svakog zahtjeva u zasebnoj dretvi
         client_thread = threading.Thread(target=process_request, args=(request, client_socket))

@@ -1,6 +1,5 @@
 async function insertGroceriesIntoGrid() {
-
-  if (!window.location.href.includes("/groceries")) {
+  if (window.location.href.includes("/recipes")) {
     return;
   }
 

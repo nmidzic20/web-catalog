@@ -61,6 +61,4 @@ if __name__ == "__main__":
 
     query_result = db.execute_query("SELECT * FROM Grocery")
 
-    #db.execute_run_query("INSERT INTO Grocery (name, carbs) VALUES (?, ?)", ('Beef', 200))
-
     db.close_connection()

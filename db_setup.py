@@ -36,8 +36,8 @@ def insert_dummy_data(conn):
     cursor.execute("INSERT INTO Grocery (name, carbs) VALUES ('Raspberry', 100);")
 
 
-    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Apple Pie', 'Great dessert', 'https://www.inspiredtaste.net/wp-content/uploads/2019/10/Homemade-Apple-Pie-Recipe-6-1200.jpg', 'No instructions needed for this meal.');")
-    cursor.execute("INSERT INTO Recipe (name, desc, picture, instructions) VALUES ('Chicken with Vegetables', 'Healthy meal', 'https://www.seriouseats.com/thmb/mfGNHGV3cBlpYyH49UTiUQgB8zI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/pan-roasted-chicken-vegetables-dijon-jus-recipe-hero-02_1-c3e427250efe40259dc8fab9ff66ea74.JPG', 'No instructions needed for this meal.');")
+    cursor.execute("INSERT INTO Recipe (name, desc, instructions) VALUES ('Apple Pie', 'Great dessert', 'Peel and slice apples, mix with sugar and spices, place in a pie crust, cover with a second crust, and bake until golden brown.');")
+    cursor.execute("INSERT INTO Recipe (name, desc, instructions) VALUES ('Chicken with Vegetables', 'Healthy meal', 'Season chicken pieces, sauté with a variety of vegetables, add desired herbs and spices, and simmer until the chicken is cooked through and vegetables are tender.');")
 
     cursor.execute("INSERT INTO Ingredient (recipe_id, grocery_id, amount) VALUES (1, 1, 3);")  
     cursor.execute("INSERT INTO Ingredient (recipe_id, grocery_id, amount) VALUES (2, 2, 500);")
@@ -62,7 +62,6 @@ if __name__ == '__main__':
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             desc TEXT,
-            picture TEXT,
             instructions TEXT
         );
     '''
