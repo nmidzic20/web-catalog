@@ -21,6 +21,8 @@ def request_handler(request):
     headers = request.split("\n")
     request_type, requested_path, _ = headers[0].split()
 
+    print(f"Request type: {request_type}")
+
     if request_type == "POST":
         content_length = 0
 
@@ -64,6 +66,8 @@ def request_handler(request):
                 response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
                 response_json = json.dumps({"id": recipe_id, "message": "POST request successfully processed"})
                 response = response_headers + response_json
+
+                print(f"Response: {response}")
                 return response
             
             elif requested_path == "/groceries":
@@ -77,9 +81,13 @@ def request_handler(request):
                 response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
                 response_json = json.dumps({"id": grocery_id, "message": "POST request successfully processed"})
                 response = response_headers + response_json
+
+                print(f"Response: {response}")
                 return response
 
-        return "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
+        resp = "HTTP/1.1 400 Bad Request\n\nInvalid request or not recognized"
+        print(f"Response: {resp}")
+        return resp
     elif request_type == "GET":
         if requested_path == "/":
             requested_path = "/groceries"
@@ -97,6 +105,8 @@ def request_handler(request):
     
             response_json = json.dumps({"recipes": list_of_recipe_dicts})
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
+
+            print(f"Response:\n {response_headers} {response_json}")
             return response_headers + response_json
         elif requested_path == "/api/groceries":
             result = groceries.GroceryHandler().get_all_groceries()
@@ -105,6 +115,7 @@ def request_handler(request):
             response_json = json.dumps({"groceries": list_of_dicts})
             response_headers = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n"
 
+            print(f"Response:\n {response_headers} {response_json}")
             return response_headers + response_json
         elif "/api/images/" in requested_path:
             mime_type, _ = mimetypes.guess_type(requested_path)
@@ -113,10 +124,14 @@ def request_handler(request):
                 image = open(IMAGE_DIR + requested_path.split("api/images")[1], "rb")
                 image_content = image.read()
                 image.close()
-                return (f"HTTP/1.1 200 OK\r\nContent-Type: {mime_type}\r\nAccept-Ranges: bytes\r\n\r\n", image_content)
+                res = f"HTTP/1.1 200 OK\r\nContent-Type: {mime_type}\r\nAccept-Ranges: bytes\r\n\r\n"
+                print(f"Response:\n {res}")
+                return (res, image_content)
                 
             except FileNotFoundError:
-                return f"HTTP/1.1 404 OK\r\nContent-Type: {mime_type}\r\n\r\nImage not found"
+                res = f"HTTP/1.1 404 OK\r\nContent-Type: {mime_type}\r\n\r\nImage not found"
+                print(f"Response: {res}")
+                return res
         try:
 
             index = open(FRONTEND_DIR + "/index.html")
@@ -133,8 +148,6 @@ def request_handler(request):
                 sanitized_path += ".html"
 
             mime_type, _ = mimetypes.guess_type(sanitized_path)
-            print(sanitized_path)
-            print(mime_type)
 
             file = open(FRONTEND_DIR + sanitized_path)
             file_content = file.read()
@@ -157,6 +170,9 @@ def request_handler(request):
         except FileNotFoundError:
             response = "HTTP/1.1 404 Not Found\n\nRequested web page not found\n"
 
+        print("Response: .html/.css/.js file (content not printed out due to size)")
+        # uncomment to print content of files sent back from server
+        # print(f"Response: {response}")
         return response
     
 
@@ -217,7 +233,7 @@ def main():
     while True:
         try:
             client_socket, client_address = server_socket.accept()
-            print(f"Connected to: {client_address}")
+            print(f"Request from IP address: {client_address}")
 
             handle_client(client_socket)
 
