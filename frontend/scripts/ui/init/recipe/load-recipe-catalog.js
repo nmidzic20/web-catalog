@@ -1,8 +1,6 @@
 async function insertRecipesIntoGrid() {
   
-  if (!window.location.href.includes("/recipes")) {
-    return;
-  }
+  if (!window.location.href.includes("/recipes")) return;
 
   const grid = document.getElementById("recipes");
 
@@ -23,15 +21,13 @@ async function insertRecipesIntoGrid() {
   }
 
   var recipes = await fetchRecipes();
-    recipes = filterForQueryParameters(recipes);
-    if (recipes.length === 0) {
-      setVisibility("no-recipes", true);
-    } else {
-      setVisibility("no-recipes", false);
-      grid.innerHTML = recipes
-        .map((recipe) => recipe.getClickableHtmlDisplay())
-        .join("");
-    }
+  recipes = filterForQueryParameters(recipes);
+  if (recipes.length === 0) {
+    setVisibility("no-recipes", true);
+  } else {
+    setVisibility("no-recipes", false);
+    grid.innerHTML = recipes.map((recipe) => recipe.getClickableHtmlDisplay()).join("");
+  }
 
 }
 

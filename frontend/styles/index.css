@@ -98,6 +98,15 @@ input[type="file"] {
   font-size: 16px;
 }
 
+input[type="file"]::file-selector-button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+}
+
 input[type="file"]:hover {
   background-color: var(--secondary-color);
 }

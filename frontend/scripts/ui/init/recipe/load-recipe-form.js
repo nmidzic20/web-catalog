@@ -21,7 +21,8 @@ function loadAddRecipeForm() {
                   </select>
                   <input type="number" class="grocery-amounts" name="grocery-amounts" min="1" value="1">
                   <button id="remove-row" onclick="removeRow(this)" style="margin:10px;">
-                    <i class="fas fa-trash-alt"></i> 
+                    <svg style="color: white;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" id="delete"><path fill="currentColor" d="M15 3a1 1 0 0 1 1 1h2a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2h2a1 1 0 0 1 1-1h6Z"></path><path fill="currentColor" fill-rule="evenodd" d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7Zm3.5 2a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 1 0v-9a.5.5 0 0 0-.5-.5Zm5 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 1 0v-9a.5.5 0 0 0-.5-.5Z" clip-rule="evenodd"></path></svg>
+                    <!-- icon attribution: <a href="https://iconscout.com/icons/delete" class="text-underline font-size-sm" target="_blank">Delete</a> by <a href="https://iconscout.com/contributors/rengised" class="text-underline font-size-sm">Alex Martynov</a> on <a href="https://iconscout.com" class="text-underline font-size-sm">IconScout</a> -->
                   </button>
                 </div>
                 <button id="addRow">Add grocery</button>
