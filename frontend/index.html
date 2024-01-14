@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Grocery Catalog</title>
+    #head# #init#
+  </head>
+  <header><h1>Grocery Catalog</h1></header>
+  <nav>
+    <a href="/recipes" class="nav-link" onclick="setActiveLink(this)"
+      >Recipes</a
+    >
+    <a href="/groceries" class="nav-link" onclick="setActiveLink(this)"
+      >Groceries</a
+    >
+  </nav>
+  <body>
+    <div id="modal">
+      <div id="modal-content">
+        <p id="modal-text"></p>
+        <button onclick="closeCustomAlert()">OK</button>
+      </div>
+    </div>
+    <div id="catalog">#catalog#</div>
+  </body>
+  <footer>
+    <p>&copy; Grocery Catalog 2024, all rights reserved.</p>
+  </footer>
+</html>
