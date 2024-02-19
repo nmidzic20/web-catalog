@@ -2,6 +2,12 @@
 
 Project using Python socket and HTML/CSS/JS to implement a basic web catalog for the Advanced Computer Networks course at the Faculty of Organization and Informatics. 
 
+# Technologies
+
+- Client-side: HTML, CSS, JavaScript
+- Server-side: Python with basic socket library
+- DBMS: SQLite
+
 # Installation
 
 Pre-requisite: Python installed
@@ -48,7 +54,7 @@ For the purposes of this task, the socket needs to be set to the localhost IP ad
 
 The theme of the web application is a web catalog of various groceries and recipes that can be created based on those groceries. The user has the ability to browse groceries and add them to the catalog via a form. Similarly, they have the option to browse recipes and add them via a form, where they can also include available existing groceries from the database in addition to instructions and other details in the recipe. When browsing groceries, they can click on any grocery card to get all the recipes (if any) that include that grocery, thus easily getting ideas on how to use up the remaining groceries they have in the fridge. Similarly, the user can click on any recipe card to get detailed preparation instructions.
 
-The architecture is envisioned as a client-server architecture, where the client is represented by a web browser through which the application's interface or pages are accessed, and the server is a local machine running the server.py script. By running this script, a TCP socket is created on port 8000, to which requests for pages are received via the web browser. The client communicates with the server via the HTTP protocol by sending GET and POST requests, while the server receives client requests via sockets. In case of the need to retrieve or insert data into the database, the server communicates with the `.sqlite` file.
+The architecture is envisioned as a client-server architecture, where the client is represented by a web browser through which the application's interface or pages are accessed, and the server is a local machine running the `server.py` script. By running this script, a TCP socket is created on port 8000, to which requests for pages are received via the web browser. The client communicates with the server via the HTTP protocol by sending GET and POST requests, while the server receives client requests via sockets. In case of the need to retrieve or insert data into the database, the server communicates with the `.sqlite` file.
 
 GET requests for pagesh are received at endpoints `/`, `/groceries`, and `/recipes`, and GET requests for data from the database that need to be displayed on the corresponding pages are sent to endpoints with the prefix `/api`, e.g., `/api/groceries`.
 
@@ -63,10 +69,4 @@ When the server is started, it listens for requests on the loopback address 127.
 When a request arrives from a client, that request is handled in a separate thread by creating a new thread that calls a request handling function to which the request and the socket descriptor are passed.
 
 ![architecture diagram](./architecture.jpg)
-
-# Technologies
-
-- Client-side: HTML, CSS, JavaScript
-- Server-side: Python with basic socket library
-- DBMS: SQLite
 
