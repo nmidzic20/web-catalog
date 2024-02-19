@@ -6,13 +6,13 @@ Project using Python socket and HTML/CSS/JS to implement a basic web catalog for
 
 Pre-requisite: Python installed
 
-From the root directory of the project, run the 'db_setup.py' script via the command line to create the 'web-catalog.sqlite' file and to seed the database with initial data about groceries and recipes:
+From the root directory of the project, run the `db_setup.py` script via the command line to create the `web-catalog.sqlite` file and to seed the database with initial data about groceries and recipes:
 
 ```
 python db_setup.py
 ```
 
-This creates 'web-catalog.sqlite' database with non-empty tables. Navigate to the 'backend' directory and start the local server:
+This creates `web-catalog.sqlite` database with non-empty tables. Navigate to the `backend` directory and start the local server:
 
 ```
 cd backend
