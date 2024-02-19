@@ -62,7 +62,7 @@ When the server is started, it listens for requests on the loopback address 127.
 
 When a request arrives from a client, that request is handled in a separate thread by creating a new thread that calls a request handling function to which the request and the socket descriptor are passed.
 
-![architecture diagram](./architecture.png)
+![architecture diagram](./architecture.jpg)
 
 # Technologies
 
