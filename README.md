@@ -33,16 +33,16 @@ The goal of this theme is to develop a server-side web application that manages 
 
 The server-side web application must be developed as follows:
 
--Classic TCP or UDP sockets should be used for communication with clients.
--Only the server-side application needs to be designed, while any web browser (Firefox, Chrome, Edge, etc.) should be used as the client application for testing.
+- Classic TCP or UDP sockets should be used for communication with clients.
+- Only the server-side application needs to be designed, while any web browser (Firefox, Chrome, Edge, etc.) should be used as the client application for testing.
 For the purposes of this task, the socket needs to be set to the localhost IP address (usually: 127.0.0.1) and to any available port.
--Web pages need to be designed using HTML, CSS, and JavaScript if necessary, or you can use WYSIWYG tools for rapid web page development (e.g., BlueGriffon). It is important to note that the assessment will focus on the functionality, accessibility, and intuitiveness of your system. However, web pages must include images and hyperlinks for redirection to other pages, and it is highly recommended to use appropriate color combinations.
--The application must be able to handle POST and GET requests from clients.
--The web application operates as follows: Upon a specific user request, the application must return the corresponding web page formatted appropriately. In addition to simply viewing pages, the user must be able to interact with the application on at least one page, for example, by filling out a form (POST request), which the server-side application must be able to process.
--Proper parsing of requests and responses, as well as appropriate protocols, must be taken into account.
--The application must be multithreaded, and it is recommended to use the "thread per request" approach.
--For easier request processing tracking, the application must print in the console upon startup the IP address and port it is running on, and upon each incoming request, it must print from which IP address the request came, which request it is, and which response was sent to the request (200 OK, 404 Not found, etc.).
--No usage of frameworks or modified socket libraries (e.g., WebSocket). Only the basic socket library should be used, since the system must be designed "from scratch."
+- Web pages need to be designed using HTML, CSS, and JavaScript if necessary, or you can use WYSIWYG tools for rapid web page development (e.g., BlueGriffon). It is important to note that the assessment will focus on the functionality, accessibility, and intuitiveness of your system. However, web pages must include images and hyperlinks for redirection to other pages, and it is highly recommended to use appropriate color combinations.
+- The application must be able to handle POST and GET requests from clients.
+- The web application operates as follows: Upon a specific user request, the application must return the corresponding web page formatted appropriately. In addition to simply viewing pages, the user must be able to interact with the application on at least one page, for example, by filling out a form (POST request), which the server-side application must be able to process.
+- Proper parsing of requests and responses, as well as appropriate protocols, must be taken into account.
+- The application must be multithreaded, and it is recommended to use the "thread per request" approach.
+- For easier request processing tracking, the application must print in the console upon startup the IP address and port it is running on, and upon each incoming request, it must print from which IP address the request came, which request it is, and which response was sent to the request (200 OK, 404 Not found, etc.).
+- No usage of frameworks or modified socket libraries (e.g., WebSocket). Only the basic socket library should be used, since the system must be designed "from scratch."
 
 # Description
 
